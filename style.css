@@ -1,29 +1,34 @@
+/* ================= RESET ================= */
+
 *{
 box-sizing:border-box;
+margin:0;
+padding:0;
 }
 
 html,body{
-margin:0;
 overflow-x:hidden;
 font-family:system-ui;
-background:#eceff1;
+background:#f2ede8;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 
 .topo{
 background:white;
-padding:10px;
+padding:12px;
 text-align:center;
 }
 
-.logo{width:150px}
+.logo{
+width:150px;
+}
 
-/* SLIDER */
+/* ================= BANNERS ================= */
 
 #banners{
 display:flex;
-gap:10px;
+gap:12px;
 overflow-x:auto;
 padding:10px;
 }
@@ -31,50 +36,126 @@ padding:10px;
 #banners img{
 height:160px;
 border-radius:12px;
+flex-shrink:0;
 }
 
-/* PRODUTOS */
+/* ================= CATEGORIAS ================= */
+
+nav{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+padding:12px;
+background:white;
+justify-content:center;
+}
+
+nav button{
+background:#fff3e0;
+border:none;
+padding:10px 16px;
+border-radius:25px;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+/* ================= PRODUTOS ================= */
 
 #produtos{
 display:grid;
 grid-template-columns:
 repeat(auto-fit,minmax(260px,1fr));
-gap:18px;
+gap:20px;
 padding:15px;
 margin-right:320px;
 }
 
+/* CARD COM IMAGEM FUNDO */
+
 .card{
-background:white;
-border-radius:14px;
-padding:10px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
+position:relative;
+height:300px;
+border-radius:16px;
+overflow:hidden;
+
+background-size:cover;
+background-position:center;
+
+display:flex;
+flex-direction:column;
+justify-content:flex-end;
+
+color:white;
+
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+transition:.25s;
 }
 
-.card img{
-width:100%;
-height:220px;
-object-fit:cover;
-border-radius:14px;
-cursor:pointer;
+.card:hover{
+transform:translateY(-5px);
+}
+
+/* ESCURECER FOTO */
+
+.card::after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(
+to top,
+rgba(0,0,0,.8),
+rgba(0,0,0,.3),
+transparent
+);
+}
+
+/* TEXTO SOBRE FOTO */
+
+.card h3,
+.card .preco,
+.qtd{
+position:relative;
+z-index:2;
+padding-left:12px;
+}
+
+.card h3{
+font-size:22px;
 }
 
 .preco{
-color:#e53935;
+font-size:20px;
+color:#ff5252;
 font-weight:bold;
 }
 
-/* PEDIDO */
+/* BOTÕES */
+
+.qtd{
+margin:10px;
+}
+
+.qtd button{
+padding:6px 12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* ================= PEDIDO ================= */
 
 .pedido{
 position:fixed;
 right:10px;
 bottom:10px;
 width:280px;
-background:white;
+background:#1c1c1c;
+color:white;
 padding:15px;
 border-radius:14px;
-box-shadow:0 8px 25px rgba(0,0,0,.2);
+box-shadow:0 8px 25px rgba(0,0,0,.4);
 }
 
 .pedido input,
@@ -82,20 +163,24 @@ box-shadow:0 8px 25px rgba(0,0,0,.2);
 .pedido textarea{
 width:100%;
 margin-top:6px;
-padding:7px;
+padding:8px;
+border-radius:6px;
+border:none;
 }
 
 .pedido button{
 margin-top:10px;
 width:100%;
-padding:10px;
-background:#25D366;
+padding:12px;
+background:#c62828;
 border:none;
 color:white;
+font-weight:bold;
 border-radius:8px;
+cursor:pointer;
 }
 
-/* ZOOM */
+/* ================= ZOOM ================= */
 
 #zoom{
 display:none;
@@ -104,35 +189,42 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,.9);
+background:black;
 z-index:9999;
 justify-content:center;
 align-items:center;
 }
 
 #zoom img{
-max-width:90%;
-max-height:90%;
+max-width:100vw;
+max-height:100vh;
+object-fit:contain;
 border-radius:12px;
 }
 
-/* MOBILE */
+/* ================= RODAPE ================= */
+
+.rodape{
+background:#111;
+color:white;
+padding:18px;
+text-align:center;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:6px;
+}
+
+/* ================= MOBILE ================= */
 
 @media(max-width:900px){
 
-#produtos{
-margin-right:0;
-padding-bottom:420px;
+nav{
+flex-wrap:nowrap;
+overflow-x:auto;
+justify-content:flex-start;
 }
-
-.pedido{
-position:relative;
-width:100%;
-margin:10px;
-}
-
-}
-@media(max-width:900px){
 
 #produtos{
 grid-template-columns:1fr;
@@ -140,8 +232,8 @@ margin-right:0;
 padding-bottom:420px;
 }
 
-.card img{
-height:240px;
+.card{
+height:340px;
 }
 
 .pedido{
@@ -150,35 +242,4 @@ width:100%;
 margin:10px;
 }
 
-}
-.rodape{
-background:#111;
-color:white;
-padding:18px;
-font-size:14px;
-text-align:center;
-
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:6px;
-}
-
-.card h3{
-margin:8px 0 4px;
-font-size:20px;
-}
-
-.preco{
-font-size:18px;
-}
-
-.card h3{
-margin:8px 0 4px;
-font-size:20px;
-}
-
-.preco{
-font-size:18px;
 }
