@@ -20,11 +20,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <img src="img/logo.png" class="logo">
 
-<div class="banner">
-<video autoplay muted loop>
-<source src="videos/promo.mp4">
-</video>
-</div>
+<!-- INSTAGRAM AUTOMATICO -->
+<iframe
+src="https://snapwidget.com/embed/1031825"
+class="instagram">
+</iframe>
 
 </header>
 
@@ -32,34 +32,29 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <section id="produtos"></section>
 
-<!-- CARRINHO IFOOD -->
+<!-- PEDIDO COMPACTO -->
 <section class="pedido">
 
-<h2>🛒 Seu Pedido</h2>
+<h3>🛒 Seu Pedido</h3>
 
 <div id="itens"></div>
-<h3 id="total">Total: R$0,00</h3>
-
-<div class="form">
+<div id="total">Total: R$0,00</div>
 
 <select id="bairro">
 <option value="5">Goiânia - R$5</option>
 <option value="20">Senador Canedo - R$20</option>
-<option value="20">Aparecida - R$20</option>
-<option value="20">Inhumas - R$20</option>
 <option value="0">Retirar</option>
 </select>
 
 <select id="pagamento">
 <option>PIX</option>
 <option>Dinheiro</option>
-<option>Cartão Crédito</option>
-<option>Cartão Débito</option>
+<option>Cartão</option>
 </select>
 
 <input id="nome" placeholder="Nome">
 <input id="telefone" placeholder="Telefone">
-<input id="endereco" placeholder="Rua, QD, LT, Número">
+<input id="endereco" placeholder="Endereço">
 
 <textarea id="obs"
 placeholder="Observações"></textarea>
@@ -68,16 +63,30 @@ placeholder="Observações"></textarea>
 FINALIZAR PEDIDO
 </button>
 
-</div>
-
 </section>
 
-<footer>
-<p>Atacado acima de 4 pacotes</p>
-<p>Espetos especiais 140g a 280g</p>
+<footer class="rodape">
+
+<div class="info">
+
+<p>📦 Atacado acima de 4 pacotes</p>
+<p>🔥 Espetos especiais 140g a 280g</p>
+
 <p>☎ 62 3579-7728 | 62 99380-3353</p>
-<p>AV do Povo QD37 LT 18</p>
-<p>Vila Mutirão II - Goiania - GO</p>
+
+<p>
+📍 AV do Povo QD37 LT18<br>
+Vila Mutirão II - Goiânia GO
+</p>
+
+<a target="_blank"
+href="https://instagram.com/botique_da_carne">
+<i class="fab fa-instagram"></i>
+ Instagram
+</a>
+
+</div>
+
 </footer>
 
 <script src="script.js"></script>
