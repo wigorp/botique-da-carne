@@ -1,5 +1,3 @@
-no html:
-
 const numero="5562992819373";
 
 const categoriasDiv=document.getElementById("categorias");
@@ -7,9 +5,6 @@ const produtosDiv=document.getElementById("produtos");
 const itensDiv=document.getElementById("itens");
 const totalDiv=document.getElementById("total");
 const bairro=document.getElementById("bairro");
-
-let carrinho={};
-let categoriaAtual="";
 
 /* ICONES WHATSAPP */
 
@@ -23,6 +18,9 @@ if(cat.includes("Kit Semanal")) return "📅";
 
 return "🥩";
 }
+
+let carrinho={};
+let categoriaAtual="";
 
 const produtos=[
 
@@ -85,18 +83,23 @@ const produtos=[
 {cat:"Insumos",nome:"Mandioca",preco:18},
 ];
 
-/* CATEGORIAS */
+/* BANNERS OPCIONAIS */
 
-const categorias=[...new Set(produtos.map(p=>p.cat))];
+const banners=[
+"oferta1.jpg",
+"promo.jpg"
+];
 
-categorias.forEach(cat=>{
-categoriasDiv.innerHTML+=
-`<button onclick="mostrar('${cat}')">
-${icone(cat)} ${cat}
-</button>`;
+const bannerDiv=document.getElementById("banners");
+
+banners.forEach(img=>{
+let i=document.createElement("img");
+i.src="img/"+img;
+i.onerror=()=>i.remove();
+bannerDiv.appendChild(i);
 });
 
-/* MOSTRAR PRODUTOS */
+/* MOSTRAR */
 
 function mostrar(cat){
 
@@ -108,10 +111,9 @@ produtos.forEach((p,i)=>{
 if(p.cat!==cat)return;
 
 produtosDiv.innerHTML+=`
-
 <div class="card">
 
-<img src="${p.img || 'img/padrao.jpg'}">
+<img src="${p.img || 'logo.png'}">
 
 <h3>${p.nome}</h3>
 
@@ -119,17 +121,15 @@ produtosDiv.innerHTML+=`
 R$ ${p.preco.toFixed(2)}
 </p>
 
-<div class="qtd">
+<div>
 <button onclick="alterar(${i},-1)">-</button>
-<span>${carrinho[i]||0}</span>
+${carrinho[i]||0}
 <button onclick="alterar(${i},1)">+</button>
 </div>
 
 </div>`;
 });
 }
-
-/* ALTERAR */
 
 function alterar(i,v){
 
@@ -144,8 +144,8 @@ mostrar(categoriaAtual);
 
 function render(){
 
-let html="";
 let total=0;
+let html="";
 
 for(let i in carrinho){
 
@@ -154,29 +154,41 @@ if(carrinho[i]>0){
 let p=produtos[i];
 let sub=p.preco*carrinho[i];
 
-html+=`${p.nome} x${carrinho[i]}
-= R$${sub.toFixed(2)}<br>`;
-
+html+=`${p.nome} x${carrinho[i]} = R$${sub.toFixed(2)}<br>`;
 total+=sub;
 }
 }
 
-const frete=Number(bairro.value);
+const frete=Number(bairro.value||0);
+
 total+=frete;
 
 totalDiv.innerText=
-"Total: R$"+total.toFixed(2);
+`🚚 Total: R$${total.toFixed(2)}`;
 
 itensDiv.innerHTML=html;
 }
 
 bairro.addEventListener("change",render);
 
-/* WHATSAPP */
+/* VALIDAÇÃO */
 
 function enviarPedido(){
 
+if(!nome.value.match(/^[A-Za-zÀ-ÿ ]+$/))
+return alert("Nome somente letras");
+
+if(!telefone.value.match(/^[0-9]+$/))
+return alert("Telefone somente números");
+
+if(!endereco.value)
+return alert("Informe endereço");
+
+if(!bairro.value)
+return alert("Selecione entrega");
+
 let msg="🔥 *Pedido Botique da Carne*\n\n";
+
 let total=0;
 
 for(let i in carrinho){
@@ -184,6 +196,7 @@ for(let i in carrinho){
 if(carrinho[i]>0){
 
 let p=produtos[i];
+
 msg+=`${icone(p.cat)} ${p.nome} x${carrinho[i]}\n`;
 
 total+=p.preco*carrinho[i];
@@ -194,18 +207,17 @@ const frete=Number(bairro.value);
 total+=frete;
 
 msg+=`\n🚚 Frete: R$${frete}`;
-msg+=`\n💰 *Total: R$${total.toFixed(2)}*\n\n`;
+msg+=`\n💰 Total: R$${total.toFixed(2)}\n\n`;
 
 msg+=`👤 ${nome.value}\n`;
 msg+=`📞 ${telefone.value}\n`;
 msg+=`📍 ${endereco.value}\n`;
 msg+=`💳 ${pagamento.value}\n`;
+
+if(obs.value)
 msg+=`📝 ${obs.value}`;
 
 window.open(
 `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`
 );
 }
-
-mostrar(categorias[0]);
-render();
