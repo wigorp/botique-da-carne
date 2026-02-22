@@ -1,3 +1,5 @@
+no html:
+
 const numero="5562992819373";
 
 const categoriasDiv=document.getElementById("categorias");
@@ -6,10 +8,10 @@ const itensDiv=document.getElementById("itens");
 const totalDiv=document.getElementById("total");
 const bairro=document.getElementById("bairro");
 
-let categoriaAtual="";
 let carrinho={};
+let categoriaAtual="";
 
-/* ICONES */
+/* ICONES WHATSAPP */
 
 function icone(cat){
 
@@ -22,12 +24,10 @@ if(cat.includes("Kit Semanal")) return "📅";
 return "🥩";
 }
 
-/* PRODUTOS */
-
 const produtos=[
 
 {cat:"Espetinhos > Bovinos",nome:"Contra Filé",preco:60},
-{cat:"Espetinhos > Bovinos",nome:"Picanha",preco:90,img:"Captura de Tela 2026-02-22 às 17.30.47.png"},
+{cat:"Espetinhos > Bovinos",nome:"Picanha",preco:90"},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos1",preco:90},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos2",preco:90},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos3",preco:90},
@@ -96,7 +96,7 @@ ${icone(cat)} ${cat}
 </button>`;
 });
 
-/* MOSTRAR */
+/* MOSTRAR PRODUTOS */
 
 function mostrar(cat){
 
@@ -105,12 +105,15 @@ produtosDiv.innerHTML="";
 
 produtos.forEach((p,i)=>{
 
-if(p.cat!==cat) return;
+if(p.cat!==cat)return;
 
 produtosDiv.innerHTML+=`
+
 <div class="card">
 
-<h3>${icone(p.cat)} ${p.nome}</h3>
+<img src="${p.img || 'img/padrao.jpg'}">
+
+<h3>${p.nome}</h3>
 
 <p class="preco">
 R$ ${p.preco.toFixed(2)}
@@ -131,7 +134,7 @@ R$ ${p.preco.toFixed(2)}
 function alterar(i,v){
 
 carrinho[i]=(carrinho[i]||0)+v;
-if(carrinho[i]<0) carrinho[i]=0;
+if(carrinho[i]<0)carrinho[i]=0;
 
 render();
 mostrar(categoriaAtual);
@@ -151,10 +154,10 @@ if(carrinho[i]>0){
 let p=produtos[i];
 let sub=p.preco*carrinho[i];
 
-total+=sub;
-
 html+=`${p.nome} x${carrinho[i]}
-= R$ ${sub.toFixed(2)}<br>`;
+= R$${sub.toFixed(2)}<br>`;
+
+total+=sub;
 }
 }
 
@@ -162,7 +165,7 @@ const frete=Number(bairro.value);
 total+=frete;
 
 totalDiv.innerText=
-"Total: R$ "+total.toFixed(2);
+"Total: R$"+total.toFixed(2);
 
 itensDiv.innerHTML=html;
 }
@@ -173,7 +176,7 @@ bairro.addEventListener("change",render);
 
 function enviarPedido(){
 
-let msg="🔥 Pedido Botique da Carne\n\n";
+let msg="🔥 *Pedido Botique da Carne*\n\n";
 let total=0;
 
 for(let i in carrinho){
@@ -181,8 +184,7 @@ for(let i in carrinho){
 if(carrinho[i]>0){
 
 let p=produtos[i];
-
-msg+=`${p.nome} x${carrinho[i]}\n`;
+msg+=`${icone(p.cat)} ${p.nome} x${carrinho[i]}\n`;
 
 total+=p.preco*carrinho[i];
 }
@@ -192,7 +194,7 @@ const frete=Number(bairro.value);
 total+=frete;
 
 msg+=`\n🚚 Frete: R$${frete}`;
-msg+=`\n💰 Total: R$${total.toFixed(2)}\n\n`;
+msg+=`\n💰 *Total: R$${total.toFixed(2)}*\n\n`;
 
 msg+=`👤 ${nome.value}\n`;
 msg+=`📞 ${telefone.value}\n`;
@@ -205,8 +207,5 @@ window.open(
 );
 }
 
-/* INIT */
-
 mostrar(categorias[0]);
 render();
-
