@@ -121,18 +121,17 @@ text-align:center;
 
 #produtos{
 margin-right:0;
-padding-bottom:220px;
+padding-bottom:420px;
 }
 
 .pedido{
-position:fixed;
-left:0;
-right:0;
-bottom:0;
-width:auto;
-border-radius:15px 15px 0 0;
-max-height:45vh;
-overflow:auto;
+position:relative;
+width:100%;
+bottom:auto;
+right:auto;
+border-radius:0;
+box-shadow:none;
+margin:10px;
 }
 
 }
