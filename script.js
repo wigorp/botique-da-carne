@@ -232,7 +232,9 @@ document.body.style.overflow="hidden";
 }
 
 function fecharZoom(){
+
 document.getElementById("zoom").style.display="none";
+document.body.style.overflow="auto";
 }
 
 /* ================= INPUT ================= */
