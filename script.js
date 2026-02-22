@@ -6,22 +6,21 @@ const itensDiv=document.getElementById("itens");
 const totalDiv=document.getElementById("total");
 const bairro=document.getElementById("bairro");
 
-/* ICONES WHATSAPP */
+let carrinho={};
+let categoriaAtual="";
+
+/* ICONES */
 
 function icone(cat){
-
 if(cat.includes("Bovinos")) return "🐄";
 if(cat.includes("Frango")) return "🐔";
 if(cat.includes("Outros")) return "🐖";
 if(cat.includes("Kit Churrasco")) return "🔥";
 if(cat.includes("Kit Semanal")) return "📅";
-
 return "🥩";
 }
 
-let carrinho={};
-let categoriaAtual="";
-
+/* produtos */
 const produtos=[
 
 {cat:"Espetinhos > Bovinos",nome:"Contra Filé",preco:60,img:"img/logo.png"},
@@ -84,30 +83,18 @@ const produtos=[
 ];
 
 
-/* ===== CATEGORIAS ===== */
+/* CATEGORIAS */
 
-const categorias=[
-...new Set(produtos.map(p=>p.cat))
-];
+const categorias=[...new Set(produtos.map(p=>p.cat))];
 
 categorias.forEach(cat=>{
-categoriasDiv.innerHTML+=`
-<button onclick="mostrar('${cat}')">
-${icone(cat)} ${cat}
-</button>`;
+categoriasDiv.innerHTML+=
+`<button onclick="mostrar('${cat}')">${icone(cat)} ${cat}</button>`;
 });
 
-/* iniciar */
+/* SLIDER */
 
-mostrar(categorias[0]);
-render();
-
-/* BANNERS OPCIONAIS */
-
-const banners=[
-"oferta1.jpg",
-"promo.jpg"
-];
+const banners=["banner1.jpg","banner2.jpg"];
 
 const bannerDiv=document.getElementById("banners");
 
@@ -132,7 +119,8 @@ if(p.cat!==cat)return;
 produtosDiv.innerHTML+=`
 <div class="card">
 
-<img src="${p.img || 'logo.png'}">
+<img src="${p.img || 'img/padrao.jpg'}"
+onclick="zoomImg('${p.img || 'img/padrao.jpg'}')">
 
 <h3>${p.nome}</h3>
 
@@ -140,7 +128,7 @@ produtosDiv.innerHTML+=`
 R$ ${p.preco.toFixed(2)}
 </p>
 
-<div>
+<div class="qtd">
 <button onclick="alterar(${i},-1)">-</button>
 ${carrinho[i]||0}
 <button onclick="alterar(${i},1)">+</button>
@@ -151,10 +139,8 @@ ${carrinho[i]||0}
 }
 
 function alterar(i,v){
-
 carrinho[i]=(carrinho[i]||0)+v;
 if(carrinho[i]<0)carrinho[i]=0;
-
 render();
 mostrar(categoriaAtual);
 }
@@ -179,35 +165,19 @@ total+=sub;
 }
 
 const frete=Number(bairro.value||0);
-
 total+=frete;
 
-totalDiv.innerText=
-`🚚 Total: R$${total.toFixed(2)}`;
-
+totalDiv.innerText=`🚚 Total: R$${total.toFixed(2)}`;
 itensDiv.innerHTML=html;
 }
 
 bairro.addEventListener("change",render);
 
-/* VALIDAÇÃO */
+/* WHATSAPP UTF8 */
 
 function enviarPedido(){
 
-if(!nome.value.match(/^[A-Za-zÀ-ÿ ]+$/))
-return alert("Nome somente letras");
-
-if(!telefone.value.match(/^[0-9]+$/))
-return alert("Telefone somente números");
-
-if(!endereco.value)
-return alert("Informe endereço");
-
-if(!bairro.value)
-return alert("Selecione entrega");
-
-let msg="🔥 *Pedido Botique da Carne*\n\n";
-
+let msg="🔥 Pedido Botique da Carne\n\n";
 let total=0;
 
 for(let i in carrinho){
@@ -217,7 +187,6 @@ if(carrinho[i]>0){
 let p=produtos[i];
 
 msg+=`${icone(p.cat)} ${p.nome} x${carrinho[i]}\n`;
-
 total+=p.preco*carrinho[i];
 }
 }
@@ -230,25 +199,40 @@ msg+=`\n💰 Total: R$${total.toFixed(2)}\n\n`;
 
 msg+=`👤 ${nome.value}\n`;
 msg+=`📞 ${telefone.value}\n`;
-msg+=`📍 ${endereco.value}\n`;
-msg+=`💳 ${pagamento.value}\n`;
+msg+=`📍 ${endereco.value}`;
 
-if(obs.value)
-msg+=`📝 ${obs.value}`;
+const url=
+"https://wa.me/"+numero+
+"?text="+encodeURIComponent(unescape(encodeURIComponent(msg)));
 
-window.open(
-`https://wa.me/${numero}?text=${encodeURIComponent(msg)}`
-);
+window.open(url,"_blank");
 }
 
-/* BLOQUEIO DIGITAÇÃO */
+/* ZOOM */
+
+function zoomImg(src){
+document.getElementById("zoom").style.display="flex";
+document.getElementById("zoomImg").src=src;
+}
+
+function fecharZoom(){
+document.getElementById("zoom").style.display="none";
+}
+
+/* BLOQUEIO INPUT */
 
 nome.addEventListener("input",()=>{
-nome.value =
-nome.value.replace(/[^A-Za-zÀ-ÿ ]/g,"");
+nome.value=nome.value.replace(/[^A-Za-zÀ-ÿ ]/g,"");
 });
 
 telefone.addEventListener("input",()=>{
-telefone.value =
-telefone.value.replace(/[^0-9]/g,"");
+telefone.value=telefone.value.replace(/[^0-9]/g,"");
 });
+
+mostrar(categorias[0]);
+render();
+
+
+
+
+
