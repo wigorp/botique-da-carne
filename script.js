@@ -1,6 +1,4 @@
-const numero="5562992819373";
-
-
+const numero="5562993803353";
 
 /* ICONES */
 
@@ -24,9 +22,11 @@ return "📅";
 return "🥩";
 }
 
+/* PRODUTOS */
+
 const produtos=[
 
-{cat:"Espetinhos > Bovinos",nome:"Contra Filé",preco:60},
+{cat:"Espetinhos > Bovinos",nome:"Contra Filé",preco:60},
 {cat:"Espetinhos > Bovinos",nome:"Picanha",preco:90},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos1",preco:90},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos2",preco:90},
@@ -60,7 +60,7 @@ const produtos=[
 {cat:"Espetinhos > Especiais",nome:"Especial7",preco:95},
 
   
-{cat:"Espetinhos > Outros",nome:"Linguiça",preco:60},
+{cat:"Espetinhos > Outros",nome:"Linguiça",preco:60},
 {cat:"Espetinhos > Outros",nome:"Queijo Coalho",preco:30},
 {cat:"Espetinhos > Outros",nome:"Outros=1",preco:30},
 {cat:"Espetinhos > Outros",nome:"Outros=2",preco:30},
@@ -78,14 +78,12 @@ const produtos=[
 {cat:"Kit Churrasco",nome:"Kit 159.90",preco:159.9},
 {cat:"Kit Churrasco",nome:"Kit 189.90",preco:189.9},  
 
-{cat:"Insumos",nome:"Carvão",preco:35},
-{cat:"Insumos",nome:"Pão de Alho",preco:18},
-{cat:"Insumos",nome:"Pão de Alho2",preco:18},
-{cat:"Insumos",nome:"Pão de Alho3",preco:18},
+{cat:"Insumos",nome:"Carvão",preco:35},
+{cat:"Insumos",nome:"Pão de Alho",preco:18},
+{cat:"Insumos",nome:"Pão de Alho2",preco:18},
+{cat:"Insumos",nome:"Pão de Alho3",preco:18},
 {cat:"Insumos",nome:"Mandioca",preco:18},
-
-]
-
+];
 
 let carrinho={};
 
