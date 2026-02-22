@@ -240,3 +240,15 @@ window.open(
 `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`
 );
 }
+
+/* BLOQUEIO DIGITAÇÃO */
+
+nome.addEventListener("input",()=>{
+nome.value =
+nome.value.replace(/[^A-Za-zÀ-ÿ ]/g,"");
+});
+
+telefone.addEventListener("input",()=>{
+telefone.value =
+telefone.value.replace(/[^0-9]/g,"");
+});
