@@ -10,21 +10,22 @@
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
 
 <body>
 
 <header class="topo">
 
-<img src="img/logo.png"
-class="logo">
+<img src="logo.png" class="logo">
 
+<!-- BANNERS OPCIONAIS -->
+<div id="banners"></div>
+
+<!-- INSTAGRAM (SE FALHAR NÃO QUEBRA) -->
 <iframe
 src="https://snapwidget.com/embed/1031825"
-class="instagram">
+class="instagram"
+loading="lazy">
 </iframe>
 
 </header>
@@ -33,7 +34,7 @@ class="instagram">
 
 <main id="produtos"></main>
 
-<!-- CARRINHO -->
+<!-- PEDIDO -->
 <section class="pedido">
 
 <h3>🛒 Seu Pedido</h3>
@@ -41,18 +42,18 @@ class="instagram">
 <div id="itens"></div>
 <div id="total">Total: R$0,00</div>
 
-<select id="bairro">
-<option value="5">Goiânia - R$5</option>
-<option value="20">Senador Canedo - R$20</option>
-<option value="15">Inhumas - R$15</option>
-<option value="0">Retirar - R$00</option>
+<select id="bairro" required>
+<option value="">Selecione entrega</option>
+<option value="5">🚚 Goiânia - R$5</option>
+<option value="20">🚚 Senador Canedo - R$20</option>
+<option value="0">🏪 Retirar</option>
 </select>
 
-<select id="pagamento">
+<select id="pagamento" required>
+<option value="">Pagamento</option>
 <option>PIX</option>
 <option>Dinheiro</option>
-<option>Cartão Crédito</option>
-  <option>Cartão Debito</option>
+<option>Cartão</option>
 </select>
 
 <input id="nome" placeholder="Nome">
@@ -60,7 +61,7 @@ class="instagram">
 <input id="endereco" placeholder="Endereço">
 
 <textarea id="obs"
-placeholder="Observações"></textarea>
+placeholder="Observações (opcional)"></textarea>
 
 <button onclick="enviarPedido()">
 FINALIZAR PEDIDO
