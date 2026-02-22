@@ -60,26 +60,40 @@ const produtos=[
 {cat:"Insumos",nome:"Pão de Alho3",preco:18},
 {cat:"Insumos",nome:"Mandioca",preco:18},
 
-];
+]
 
-const categoriasDiv =
-document.getElementById("categorias");
+/* ICONES */
 
-const produtosDiv =
-document.getElementById("produtos");
+function icone(cat){
 
-const itensDiv =
-document.getElementById("itens");
+if(cat.includes("Bovinos"))
+return "🐄";
+
+if(cat.includes("Frango"))
+return "🐔";
+
+if(cat.includes("Outros"))
+return "🐖";
+
+if(cat.includes("Kit Churrasco"))
+return "🔥";
+
+if(cat.includes("Kit Semanal"))
+return "📅";
+
+return "🥩";
+}
 
 let carrinho={};
 
-/* CATEGORIAS */
+const categorias=
+[...new Set(produtos.map(p=>p.cat))];
 
-[...new Set(produtos.map(p=>p.cat))]
-.forEach(cat=>{
-
+categorias.forEach(c=>{
 categoriasDiv.innerHTML+=
-`<button onclick="mostrar('${cat}')">${cat}</button>`;
+`<button onclick="mostrar('${c}')">
+${icone(c)} ${c}
+</button>`;
 });
 
 function mostrar(cat){
@@ -94,8 +108,11 @@ produtosDiv.innerHTML+=`
 
 <div class="card">
 
-<h3>${p.nome}</h3>
-<p class="preco">R$${p.preco}</p>
+<h3>${icone(p.cat)} ${p.nome}</h3>
+
+<p class="preco">
+R$${p.preco}
+</p>
 
 <div class="qtd">
 <button onclick="alt(${i},-1)">-</button>
@@ -107,9 +124,7 @@ produtosDiv.innerHTML+=`
 });
 }
 
-mostrar(produtos[0].cat);
-
-/* CARRINHO */
+mostrar(categorias[0]);
 
 function alt(i,v){
 
@@ -119,8 +134,10 @@ if(carrinho[i]<0)
 carrinho[i]=0;
 
 render();
-mostrar(produtos[0].cat);
+mostrar(categorias[0]);
 }
+
+/* TOTAL */
 
 function render(){
 
@@ -136,31 +153,57 @@ let sub=p.preco*carrinho[i];
 
 total+=sub;
 
-html+=
-`${p.nome} x${carrinho[i]} = R$${sub}<br>`;
+html+=`${p.nome} x${carrinho[i]} = R$${sub}<br>`;
 }
 }
 
-itensDiv.innerHTML=html;
+/* FRETE */
+
+const frete=
+Number(document.getElementById("bairro").value);
+
+total+=frete;
+
+document.getElementById("total")
+.innerText=
+"Total: R$"+total.toFixed(2);
+
+itens.innerHTML=html;
 }
+
+bairro.onchange=render;
 
 /* WHATSAPP */
 
 function enviarPedido(){
 
-let msg="Pedido Botique da Carne\n\n";
+let msg="🔥 Pedido Botique da Carne\n\n";
+
+let total=0;
 
 for(let i in carrinho){
 
 if(carrinho[i]>0){
 
-msg+=`${produtos[i].nome} x${carrinho[i]}\n`;
+let p=produtos[i];
+total+=p.preco*carrinho[i];
+
+msg+=`${p.nome} x${carrinho[i]}\n`;
 }
 }
 
-msg+=`\nCliente: ${nome.value}`;
-msg+=`\nEndereço: ${endereco.value}`;
-msg+=`\nPagamento: ${pagamento.value}`;
+const frete=
+Number(bairro.value);
+
+total+=frete;
+
+msg+=`\n🚚 Frete: R$${frete}`;
+msg+=`\n💰 Total: R$${total.toFixed(2)}\n\n`;
+
+msg+=`👤 ${nome.value}\n`;
+msg+=`📍 ${endereco.value}\n`;
+msg+=`💳 ${pagamento.value}\n`;
+msg+=`📝 ${obs.value}`;
 
 window.open(
 `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`
