@@ -215,8 +215,6 @@ opacity:1;
 }
 }
 
-/* ================= RODAPÉ ================= */
-
 /* ================= RODAPE FIXO ================= */
 
 .rodape{
@@ -241,6 +239,10 @@ gap:6px;
 
 z-index:50;
 }
+
+body{
+padding-bottom:140px;
+}
 /* ================= MOBILE ================= */
 
 @media(max-width:900px){
@@ -256,6 +258,11 @@ nav button{
 min-width:auto;
 flex-shrink:0;
 }
+  
+body{
+padding-bottom:180px;
+}
+  
 
 /* produtos grandes estilo ifood */
 
