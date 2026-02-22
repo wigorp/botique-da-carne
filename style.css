@@ -9,34 +9,36 @@ padding:0;
 html,body{
 overflow-x:hidden;
 font-family:system-ui;
-background:#f2ede8;
+background:#f5f1ec;
 }
 
 /* ================= HEADER ================= */
 
 .topo{
-background:white;
-padding:12px;
+background:#111;
+padding:14px;
 text-align:center;
 }
 
 .logo{
-width:150px;
+width:170px;
 }
 
 /* ================= BANNERS ================= */
 
 #banners{
 display:flex;
-gap:12px;
+gap:15px;
 overflow-x:auto;
-padding:10px;
+padding:12px;
+scroll-snap-type:x mandatory;
 }
 
 #banners img{
-height:160px;
-border-radius:12px;
+height:170px;
+border-radius:14px;
 flex-shrink:0;
+scroll-snap-align:start;
 }
 
 /* ================= CATEGORIAS ================= */
@@ -44,21 +46,27 @@ flex-shrink:0;
 nav{
 display:flex;
 flex-wrap:wrap;
-gap:12px;
-padding:12px;
-background:white;
+gap:14px;
+padding:14px;
 justify-content:center;
+background:#ffffff;
 }
 
 nav button{
-background:#fff3e0;
-border:none;
-padding:10px 16px;
-border-radius:25px;
+background:#fff;
+border:2px solid #eee;
+padding:12px 18px;
+border-radius:30px;
 font-size:15px;
 font-weight:600;
 cursor:pointer;
-box-shadow:0 2px 6px rgba(0,0,0,.08);
+transition:.25s;
+min-width:150px;
+}
+
+nav button:hover{
+background:#ffcc00;
+transform:scale(1.05);
 }
 
 /* ================= PRODUTOS ================= */
@@ -67,120 +75,105 @@ box-shadow:0 2px 6px rgba(0,0,0,.08);
 display:grid;
 grid-template-columns:
 repeat(auto-fit,minmax(260px,1fr));
-gap:20px;
-padding:15px;
+gap:22px;
+padding:20px;
 margin-right:320px;
 }
 
-/* CARD COM IMAGEM FUNDO */
+/* CARD */
 
 .card{
-position:relative;
-height:300px;
-border-radius:16px;
+background:white;
+border-radius:18px;
 overflow:hidden;
-
-background-size:cover;
-background-position:center;
-
-display:flex;
-flex-direction:column;
-justify-content:flex-end;
-
-color:white;
-
-box-shadow:0 10px 25px rgba(0,0,0,.25);
-transition:.25s;
+box-shadow:0 10px 25px rgba(0,0,0,.12);
+transition:.3s;
 }
 
 .card:hover{
-transform:translateY(-5px);
+transform:translateY(-6px);
 }
 
-/* ESCURECER FOTO */
+/* IMAGEM GRANDE */
 
-.card::after{
-content:"";
-position:absolute;
-inset:0;
-background:linear-gradient(
-to top,
-rgba(0,0,0,.8),
-rgba(0,0,0,.3),
-transparent
-);
+.card img{
+width:100%;
+height:260px;
+object-fit:cover;
+cursor:pointer;
 }
 
-/* TEXTO SOBRE FOTO */
-
-.card h3,
-.card .preco,
-.qtd{
-position:relative;
-z-index:2;
-padding-left:12px;
-}
+/* AREA TEXTO */
 
 .card h3{
-font-size:22px;
+padding:10px 14px 0;
+font-size:21px;
 }
 
 .preco{
+color:#e53935;
 font-size:20px;
-color:#ff5252;
 font-weight:bold;
+padding:4px 14px;
 }
 
-/* BOTÕES */
+/* CONTROLES */
 
-.qtd{
-margin:10px;
+.card div{
+padding:10px 14px 16px;
 }
 
-.qtd button{
-padding:6px 12px;
+.card button{
+width:36px;
+height:36px;
+font-size:18px;
 border:none;
-border-radius:6px;
-cursor:pointer;
+border-radius:8px;
+background:#c62828;
+color:white;
 }
 
 /* ================= PEDIDO ================= */
 
 .pedido{
 position:fixed;
-right:10px;
-bottom:10px;
-width:280px;
-background:#1c1c1c;
+right:15px;
+bottom:15px;
+width:300px;
+background:#1b1b1b;
 color:white;
-padding:15px;
-border-radius:14px;
-box-shadow:0 8px 25px rgba(0,0,0,.4);
+padding:18px;
+border-radius:18px;
+box-shadow:0 10px 35px rgba(0,0,0,.4);
+}
+
+.pedido h3{
+margin-bottom:8px;
 }
 
 .pedido input,
 .pedido select,
 .pedido textarea{
 width:100%;
-margin-top:6px;
-padding:8px;
-border-radius:6px;
+margin-top:8px;
+padding:10px;
+border-radius:8px;
 border:none;
 }
 
 .pedido button{
-margin-top:10px;
+margin-top:12px;
 width:100%;
-padding:12px;
-background:#c62828;
+padding:14px;
+background:#25D366;
 border:none;
 color:white;
 font-weight:bold;
-border-radius:8px;
-cursor:pointer;
+border-radius:10px;
+font-size:16px;
 }
 
-/* ================= ZOOM ================= */
+/* ================= ZOOM REAL ================= */
 
 #zoom{
 display:none;
@@ -189,31 +182,33 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:black;
+background:rgba(0,0,0,.95);
 z-index:9999;
 justify-content:center;
 align-items:center;
 }
 
 #zoom img{
-max-width:100vw;
-max-height:100vh;
+width:auto;
+height:auto;
+max-width:95vw;
+max-height:95vh;
 object-fit:contain;
-border-radius:12px;
 }
 
-/* ================= RODAPE ================= */
+/* ================= RODAPÉ ================= */
 
 .rodape{
 background:#111;
 color:white;
-padding:18px;
+padding:25px;
 text-align:center;
 
 display:flex;
 flex-direction:column;
 align-items:center;
-gap:6px;
+justify-content:center;
+gap:10px;
 }
 
 /* ================= MOBILE ================= */
@@ -224,7 +219,15 @@ nav{
 flex-wrap:nowrap;
 overflow-x:auto;
 justify-content:flex-start;
+padding-left:10px;
 }
+
+nav button{
+min-width:auto;
+flex-shrink:0;
+}
+
+/* produtos grandes estilo ifood */
 
 #produtos{
 grid-template-columns:1fr;
@@ -232,14 +235,16 @@ margin-right:0;
 padding-bottom:420px;
 }
 
-.card{
-height:340px;
+.card img{
+height:300px;
 }
+
+/* pedido vira bloco */
 
 .pedido{
 position:relative;
 width:100%;
-margin:10px;
+margin:12px;
 }
 
 }
