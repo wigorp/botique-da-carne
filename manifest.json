@@ -1,7 +1,7 @@
 {
 "name":"Botique da Carne",
 "short_name":"Botique",
-"display":"standalone",
+"display":"browser",
 "start_url":"./",
 "background_color":"#ffffff",
 "theme_color":"#25D366"
