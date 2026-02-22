@@ -12,9 +12,9 @@ font-family:system-ui;
 background:#f5f1ec;
 }
 
-/* espaço para footer fixo */
+/* espaço para footer rodape fixo */
 body{
-padding-bottom:170px;
+padding-bottom:110px;
 }
 
 /* ================= HEADER ================= */
@@ -255,17 +255,24 @@ width:100%;
 background:#111;
 color:white;
 
-padding:16px;
+padding:8px 10px;   /* ↓ altura */
+font-size:12px;     /* ↓ fonte */
+
+text-align:center;
 
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-gap:6px;
 
-text-align:center;
+gap:2px;            /* ↓ espaço entre linhas */
 
 z-index:50;
+}
+
+.rodape p{
+margin:2px 0;
+line-height:1.2;
 }
 
 /* ================= MOBILE ================= */
