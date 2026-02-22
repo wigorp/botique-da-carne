@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Botique da Carne</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<header class="topo">
+
+<img src="img/logo.png" class="logo">
+
+<div class="banner">
+<video autoplay muted loop>
+<source src="videos/promo.mp4">
+</video>
+</div>
+
+</header>
+
+<nav id="categorias"></nav>
+
+<section id="produtos"></section>
+
+<section class="pedido">
+
+<h2>🛒 Seu Pedido</h2>
+
+<div id="itens"></div>
+
+<div class="form">
+
+<select id="bairro">
+<option value="5">Goiânia - R$5</option>
+<option value="20">Senador Canedo - R$20</option>
+<option value="20">Aparecida de Goiania - R$20</option>
+<option value="20">Inhumas - R$20</option>  
+<option value="0">Retirar - R$00</option>
+</select>
+
+<select id="pagamento">
+<option>PIX</option>
+<option>Dinheiro</option>
+<option>Cartão Credito</option>
+<option>Cartão Debito</option>
+</select>
+
+<input id="nome" placeholder="Nome">
+<input id="telefone" placeholder="Telefone">
+<input id="endereco" placeholder="Rua, QD, LT, Número">
+
+<textarea id="obs"
+placeholder="Observações"></textarea>
+
+<button onclick="enviarPedido()">
+FINALIZAR PEDIDO
+</button>
+
+</div>
+
+</section>
+
+<footer>
+
+<p>Atacado acima de 4 pacotes</p>
+<p>Espetos especiais 140g a 280g</p>
+
+<p>☎ 62 3579-7728 | 62 99380-3353</p>
+
+<p>
+AV do Povo QD37 LT18<br>
+Vila Mutirão II - Goiânia GO
+</p>
+
+<a target="_blank"
+href="https://instagram.com/botique_da_carne">
+Instagram
+</a>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
