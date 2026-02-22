@@ -27,7 +27,8 @@ return "🥩";
 const produtos=[
 
 {cat:"Espetinhos > Bovinos",nome:"Contra Filé",preco:60},
-{cat:"Espetinhos > Bovinos",nome:"Picanha",preco:90},
+  
+{cat:"Espetinhos > Bovinos",nome:"Picanha",preco:90,img:"img/carvao.jpg"},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos1",preco:90},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos2",preco:90},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos3",preco:90},
