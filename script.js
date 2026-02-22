@@ -220,11 +220,15 @@ window.open(url,"_blank");
 /* ================= ZOOM ================= */
 
 function zoomImg(src){
+
 const zoom=document.getElementById("zoom");
 const img=document.getElementById("zoomImg");
 
 img.src=src;
+
 zoom.style.display="flex";
+
+document.body.style.overflow="hidden";
 }
 
 function fecharZoom(){
