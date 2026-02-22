@@ -3,8 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta http-equiv="Content-Type"
-content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Botique da Carne</title>
@@ -20,10 +19,9 @@ content="text/html; charset=UTF-8">
 
 <img src="img/logo.png" class="logo">
 
-<!-- BANNERS OPCIONAIS -->
+<!-- SLIDER -->
 <div id="banners"></div>
 
-<!-- INSTAGRAM (SE FALHAR NÃO QUEBRA) -->
 <div class="instagram">
 <a target="_blank"
 href="https://instagram.com/botique_da_carne">
@@ -37,7 +35,6 @@ href="https://instagram.com/botique_da_carne">
 
 <main id="produtos"></main>
 
-<!-- PEDIDO -->
 <section class="pedido">
 
 <h3>🛒 Seu Pedido</h3>
@@ -45,14 +42,14 @@ href="https://instagram.com/botique_da_carne">
 <div id="itens"></div>
 <div id="total">Total: R$0,00</div>
 
-<select id="bairro" required>
+<select id="bairro">
 <option value="">Selecione entrega</option>
 <option value="5">🚚 Goiânia - R$5</option>
 <option value="20">🚚 Senador Canedo - R$20</option>
 <option value="0">🏪 Retirar</option>
 </select>
 
-<select id="pagamento" required>
+<select id="pagamento">
 <option value="">Pagamento</option>
 <option>PIX</option>
 <option>Dinheiro</option>
@@ -66,35 +63,22 @@ href="https://instagram.com/botique_da_carne">
 <textarea id="obs"
 placeholder="Observações (opcional)"></textarea>
 
-<button onclick="enviarPedido()">
-FINALIZAR PEDIDO
-</button>
+<button onclick="enviarPedido()">FINALIZAR PEDIDO</button>
 
 </section>
 
-<footer class="rodape">
+<footer class="rodape"> 
+ <div class="info"> 
+  <p>📦 Atacado acima de 4 pacotes</p> 
+  <p>🔥 Espetos especiais 140g a 280g</p> 
+  <p>☎ 62 3579-7728 | 62 99380-3353</p> 
+  <p> 📍 AV do Povo QD37 LT18</p>
+   <p> Vila Mutirão II - Goiânia GO</p>
 
-<div class="info">
-
-<p>📦 Atacado acima de 4 pacotes</p>
-<p>🔥 Espetos especiais 140g a 280g</p>
-
-<p>☎ 62 3579-7728 | 62 99380-3353</p>
-
-<p>
-📍 AV do Povo QD37 LT18<br>
-Vila Mutirão II - Goiânia GO
-</p>
-
-<a target="_blank"
-href="https://instagram.com/botique_da_carne">
-<i class="fab fa-instagram"></i>
- Instagram
-</a>
-
+<!-- ZOOM -->
+<div id="zoom" onclick="fecharZoom()">
+<img id="zoomImg">
 </div>
-
-</footer>
 
 <script src="script.js"></script>
 
