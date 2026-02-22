@@ -9,7 +9,7 @@ const bairro=document.getElementById("bairro");
 let carrinho={};
 let categoriaAtual="";
 
-/* ICONES */
+/* ================= ICONES ================= */
 
 function icone(cat){
 if(cat.includes("Bovinos")) return "🐄";
@@ -20,7 +20,7 @@ if(cat.includes("Kit Semanal")) return "📅";
 return "🥩";
 }
 
-/* produtos */
+/* ================= PRODUTOS ================= */
 const produtos=[
 
 {cat:"Espetinhos > Bovinos",nome:"Contra Filé",preco:60,img:"img/logo.png"},
@@ -82,20 +82,20 @@ const produtos=[
 {cat:"Insumos",nome:"Mandioca",preco:18},
 ];
 
-
-/* CATEGORIAS */
+/* ================= CATEGORIAS ================= */
 
 const categorias=[...new Set(produtos.map(p=>p.cat))];
 
 categorias.forEach(cat=>{
 categoriasDiv.innerHTML+=
-`<button onclick="mostrar('${cat}')">${icone(cat)} ${cat}</button>`;
+`<button onclick="mostrar('${cat}')">
+${icone(cat)} ${cat}
+</button>`;
 });
 
-/* SLIDER */
+/* ================= BANNERS ================= */
 
 const banners=["banner1.jpg","banner2.jpg"];
-
 const bannerDiv=document.getElementById("banners");
 
 banners.forEach(img=>{
@@ -105,7 +105,7 @@ i.onerror=()=>i.remove();
 bannerDiv.appendChild(i);
 });
 
-/* MOSTRAR */
+/* ================= MOSTRAR ================= */
 
 function mostrar(cat){
 
@@ -114,15 +114,13 @@ produtosDiv.innerHTML="";
 
 produtos.forEach((p,i)=>{
 
-if(p.cat!==cat)return;
+if(p.cat!==cat) return;
 
 produtosDiv.innerHTML+=`
-<div class="card">
 
-produtosDiv.innerHTML+=`
 <div class="card"
-style="background-image:url('${p.img || "img/padrao.jpg"}')"
-onclick="zoomImg('${p.img || "img/padrao.jpg"}')">
+style="background-image:url('${p.img}')"
+onclick="zoomImg('${p.img}')">
 
 <h3>${p.nome}</h3>
 
@@ -131,37 +129,32 @@ R$ ${p.preco.toFixed(2)}
 </p>
 
 <div class="qtd">
+
 <button onclick="event.stopPropagation();alterar(${i},-1)">-</button>
-${carrinho[i]||0}
+
+<span>${carrinho[i]||0}</span>
+
 <button onclick="event.stopPropagation();alterar(${i},1)">+</button>
+
 </div>
 
-</div>`;
-
-<h3>${p.nome}</h3>
-
-<p class="preco">
-R$ ${p.preco.toFixed(2)}
-</p>
-
-<div class="qtd">
-<button onclick="alterar(${i},-1)">-</button>
-${carrinho[i]||0}
-<button onclick="alterar(${i},1)">+</button>
 </div>
-
-</div>`;
+`;
 });
+
 }
+
+/* ================= ALTERAR ================= */
 
 function alterar(i,v){
 carrinho[i]=(carrinho[i]||0)+v;
 if(carrinho[i]<0)carrinho[i]=0;
+
 render();
 mostrar(categoriaAtual);
 }
 
-/* TOTAL */
+/* ================= TOTAL ================= */
 
 function render(){
 
@@ -189,7 +182,7 @@ itensDiv.innerHTML=html;
 
 bairro.addEventListener("change",render);
 
-/* WHATSAPP UTF8 */
+/* ================= WHATSAPP ================= */
 
 function enviarPedido(){
 
@@ -219,23 +212,26 @@ msg+=`📍 ${endereco.value}`;
 
 const url=
 "https://wa.me/"+numero+
-"?text="+encodeURIComponent(unescape(encodeURIComponent(msg)));
+"?text="+encodeURIComponent(msg);
 
 window.open(url,"_blank");
 }
 
-/* ZOOM */
+/* ================= ZOOM ================= */
 
 function zoomImg(src){
-document.getElementById("zoom").style.display="flex";
-document.getElementById("zoomImg").src=src;
+const zoom=document.getElementById("zoom");
+const img=document.getElementById("zoomImg");
+
+img.src=src;
+zoom.style.display="flex";
 }
 
 function fecharZoom(){
 document.getElementById("zoom").style.display="none";
 }
 
-/* BLOQUEIO INPUT */
+/* ================= INPUT ================= */
 
 nome.addEventListener("input",()=>{
 nome.value=nome.value.replace(/[^A-Za-zÀ-ÿ ]/g,"");
@@ -245,10 +241,7 @@ telefone.addEventListener("input",()=>{
 telefone.value=telefone.value.replace(/[^0-9]/g,"");
 });
 
+/* ================= INIT ================= */
+
 mostrar(categorias[0]);
 render();
-
-
-
-
-
