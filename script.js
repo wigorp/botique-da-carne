@@ -1,5 +1,29 @@
 const numero="5562992819373";
 
+
+
+/* ICONES */
+
+function icone(cat){
+
+if(cat.includes("Bovinos"))
+return "🐄";
+
+if(cat.includes("Frango"))
+return "🐔";
+
+if(cat.includes("Outros"))
+return "🐖";
+
+if(cat.includes("Kit Churrasco"))
+return "🔥";
+
+if(cat.includes("Kit Semanal"))
+return "📅";
+
+return "🥩";
+}
+
 const produtos=[
 
 {cat:"Espetinhos > Bovinos",nome:"Contra Filé",preco:60},
@@ -62,27 +86,6 @@ const produtos=[
 
 ]
 
-/* ICONES */
-
-function icone(cat){
-
-if(cat.includes("Bovinos"))
-return "🐄";
-
-if(cat.includes("Frango"))
-return "🐔";
-
-if(cat.includes("Outros"))
-return "🐖";
-
-if(cat.includes("Kit Churrasco"))
-return "🔥";
-
-if(cat.includes("Kit Semanal"))
-return "📅";
-
-return "🥩";
-}
 
 let carrinho={};
 
