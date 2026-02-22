@@ -1,23 +1,23 @@
 const numero="5562992819373";
 
+const categoriasDiv=document.getElementById("categorias");
+const produtosDiv=document.getElementById("produtos");
+const itensDiv=document.getElementById("itens");
+const totalDiv=document.getElementById("total");
+const bairro=document.getElementById("bairro");
+
+let categoriaAtual="";
+let carrinho={};
+
 /* ICONES */
 
 function icone(cat){
 
-if(cat.includes("Bovinos"))
-return "🐄";
-
-if(cat.includes("Frango"))
-return "🐔";
-
-if(cat.includes("Outros"))
-return "🐖";
-
-if(cat.includes("Kit Churrasco"))
-return "🔥";
-
-if(cat.includes("Kit Semanal"))
-return "📅";
+if(cat.includes("Bovinos")) return "🐄";
+if(cat.includes("Frango")) return "🐔";
+if(cat.includes("Outros")) return "🐖";
+if(cat.includes("Kit Churrasco")) return "🔥";
+if(cat.includes("Kit Semanal")) return "📅";
 
 return "🥩";
 }
@@ -27,8 +27,7 @@ return "🥩";
 const produtos=[
 
 {cat:"Espetinhos > Bovinos",nome:"Contra Filé",preco:60},
-  
-{cat:"Espetinhos > Bovinos",nome:"Picanha",preco:90,img:"img/carvao.jpg"},
+{cat:"Espetinhos > Bovinos",nome:"Picanha",preco:90,img:"Captura de Tela 2026-02-22 às 17.30.47.png"},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos1",preco:90},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos2",preco:90},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos3",preco:90},
@@ -86,57 +85,56 @@ const produtos=[
 {cat:"Insumos",nome:"Mandioca",preco:18},
 ];
 
-let carrinho={};
+/* CATEGORIAS */
 
-const categorias=
-[...new Set(produtos.map(p=>p.cat))];
+const categorias=[...new Set(produtos.map(p=>p.cat))];
 
-categorias.forEach(c=>{
+categorias.forEach(cat=>{
 categoriasDiv.innerHTML+=
-`<button onclick="mostrar('${c}')">
-${icone(c)} ${c}
+`<button onclick="mostrar('${cat}')">
+${icone(cat)} ${cat}
 </button>`;
 });
 
+/* MOSTRAR */
+
 function mostrar(cat){
 
+categoriaAtual=cat;
 produtosDiv.innerHTML="";
 
 produtos.forEach((p,i)=>{
 
-if(p.cat!==cat)return;
+if(p.cat!==cat) return;
 
 produtosDiv.innerHTML+=`
-
 <div class="card">
 
 <h3>${icone(p.cat)} ${p.nome}</h3>
 
 <p class="preco">
-R$${p.preco}
+R$ ${p.preco.toFixed(2)}
 </p>
 
 <div class="qtd">
-<button onclick="alt(${i},-1)">-</button>
+<button onclick="alterar(${i},-1)">-</button>
 <span>${carrinho[i]||0}</span>
-<button onclick="alt(${i},1)">+</button>
+<button onclick="alterar(${i},1)">+</button>
 </div>
 
 </div>`;
 });
 }
 
-mostrar(categorias[0]);
+/* ALTERAR */
 
-function alt(i,v){
+function alterar(i,v){
 
 carrinho[i]=(carrinho[i]||0)+v;
-
-if(carrinho[i]<0)
-carrinho[i]=0;
+if(carrinho[i]<0) carrinho[i]=0;
 
 render();
-mostrar(categorias[0]);
+mostrar(categoriaAtual);
 }
 
 /* TOTAL */
@@ -155,32 +153,27 @@ let sub=p.preco*carrinho[i];
 
 total+=sub;
 
-html+=`${p.nome} x${carrinho[i]} = R$${sub}<br>`;
+html+=`${p.nome} x${carrinho[i]}
+= R$ ${sub.toFixed(2)}<br>`;
 }
 }
 
-/* FRETE */
-
-const frete=
-Number(document.getElementById("bairro").value);
-
+const frete=Number(bairro.value);
 total+=frete;
 
-document.getElementById("total")
-.innerText=
-"Total: R$"+total.toFixed(2);
+totalDiv.innerText=
+"Total: R$ "+total.toFixed(2);
 
-itens.innerHTML=html;
+itensDiv.innerHTML=html;
 }
 
-bairro.onchange=render;
+bairro.addEventListener("change",render);
 
 /* WHATSAPP */
 
 function enviarPedido(){
 
 let msg="🔥 Pedido Botique da Carne\n\n";
-
 let total=0;
 
 for(let i in carrinho){
@@ -188,21 +181,21 @@ for(let i in carrinho){
 if(carrinho[i]>0){
 
 let p=produtos[i];
-total+=p.preco*carrinho[i];
 
 msg+=`${p.nome} x${carrinho[i]}\n`;
+
+total+=p.preco*carrinho[i];
 }
 }
 
-const frete=
-Number(bairro.value);
-
+const frete=Number(bairro.value);
 total+=frete;
 
 msg+=`\n🚚 Frete: R$${frete}`;
 msg+=`\n💰 Total: R$${total.toFixed(2)}\n\n`;
 
 msg+=`👤 ${nome.value}\n`;
+msg+=`📞 ${telefone.value}\n`;
 msg+=`📍 ${endereco.value}\n`;
 msg+=`💳 ${pagamento.value}\n`;
 msg+=`📝 ${obs.value}`;
@@ -211,3 +204,9 @@ window.open(
 `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`
 );
 }
+
+/* INIT */
+
+mostrar(categorias[0]);
+render();
+
