@@ -251,3 +251,13 @@ telefone.value=telefone.value.replace(/[^0-9]/g,"");
 
 mostrar(categorias[0]);
 render();
+
+/* =============correção da tela =========== */
+
+window.addEventListener("load",()=>{
+
+setTimeout(()=>{
+window.dispatchEvent(new Event("resize"));
+},100);
+
+});
