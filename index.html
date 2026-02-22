@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 
 <meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Botique da Carne</title>
 
@@ -15,13 +15,16 @@
 
 <body>
 
+<!-- ================= HEADER ================= -->
+
 <header class="topo">
 
-<img src="img/logo.png" class="logo">
+<img src="img/logo.png" class="logo" alt="Botique da Carne">
 
-<!-- SLIDER -->
+<!-- SLIDER / BANNERS -->
 <div id="banners"></div>
 
+<!-- INSTAGRAM -->
 <div class="instagram">
 <a target="_blank"
 href="https://instagram.com/botique_da_carne">
@@ -31,56 +34,84 @@ href="https://instagram.com/botique_da_carne">
 
 </header>
 
+
+<!-- ================= CATEGORIAS ================= -->
+
 <nav id="categorias"></nav>
 
+
+<!-- ================= PRODUTOS ================= -->
+
 <main id="produtos"></main>
+
+
+<!-- ================= PEDIDO ================= -->
 
 <section class="pedido">
 
 <h3>🛒 Seu Pedido</h3>
 
 <div id="itens"></div>
-<div id="total">Total: R$0,00</div>
+<div id="total">Total: R$ 0,00</div>
 
 <select id="bairro">
 <option value="">Selecione entrega</option>
 <option value="5">🚚 Goiânia - R$5</option>
 <option value="20">🚚 Senador Canedo - R$20</option>
-<option value="0">🏪 Retirar</option>
+<option value="0">🏪 Retirar no local</option>
 </select>
 
 <select id="pagamento">
-<option value="">Pagamento</option>
+<option value="">Forma de pagamento</option>
 <option>PIX</option>
 <option>Dinheiro</option>
 <option>Cartão</option>
 </select>
 
-<input id="nome" placeholder="Nome">
+<input id="nome" placeholder="Nome completo">
 <input id="telefone" placeholder="Telefone">
-<input id="endereco" placeholder="Endereço">
+<input id="endereco" placeholder="Endereço completo">
 
 <textarea id="obs"
 placeholder="Observações (opcional)"></textarea>
 
-<button onclick="enviarPedido()">FINALIZAR PEDIDO</button>
+<button onclick="enviarPedido()">
+FINALIZAR PEDIDO
+</button>
 
 </section>
 
-<footer class="rodape"> 
-<div class="info"> 
-<p>📦 Atacado acima de 4 pacotes</p> 
-<p>🔥 Espetos especiais 140g a 280g</p> 
-<p>☎ 62 3579-7728 | 62 99380-3353</p> 
-<p>📍 AV do Povo QD37 LT18</p>
-<p>Vila Mutirão II - Goiânia GO</p>
+
+<!-- ================= RODAPÉ FIXO ================= -->
+
+<footer class="rodape">
+
+<div class="info">
+
+<p>📦 Atacado acima de 4 pacotes</p>
+<p>🔥 Espetos especiais 140g a 280g</p>
+
+<p>☎ 62 3579-7728 | 62 99380-3353</p>
+
+<p>
+📍 AV do Povo QD37 LT18<br>
+Vila Mutirão II - Goiânia GO
+</p>
+
 </div>
+
 </footer>
 
-<!-- ZOOM FORA DO FOOTER -->
+
+<!-- ================= ZOOM IMAGEM ================= -->
+<!-- SEMPRE FORA DO FOOTER -->
+
 <div id="zoom" onclick="fecharZoom()">
-<img id="zoomImg">
+<img id="zoomImg" alt="Imagem ampliada">
 </div>
+
+
+<!-- ================= SCRIPT ================= -->
 
 <script src="script.js"></script>
 
