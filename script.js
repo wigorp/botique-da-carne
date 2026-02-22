@@ -25,7 +25,7 @@ let categoriaAtual="";
 const produtos=[
 
 {cat:"Espetinhos > Bovinos",nome:"Contra Filé",preco:60},
-{cat:"Espetinhos > Bovinos",nome:"Picanha",preco:90"},
+{cat:"Espetinhos > Bovinos",nome:"Picanha",preco:90},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos1",preco:90},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos2",preco:90},
 {cat:"Espetinhos > Bovinos",nome:"Bovinos3",preco:90},
@@ -82,6 +82,25 @@ const produtos=[
 {cat:"Insumos",nome:"Pão de Alho3",preco:18},
 {cat:"Insumos",nome:"Mandioca",preco:18},
 ];
+
+
+/* ===== CATEGORIAS ===== */
+
+const categorias=[
+...new Set(produtos.map(p=>p.cat))
+];
+
+categorias.forEach(cat=>{
+categoriasDiv.innerHTML+=`
+<button onclick="mostrar('${cat}')">
+${icone(cat)} ${cat}
+</button>`;
+});
+
+/* iniciar */
+
+mostrar(categorias[0]);
+render();
 
 /* BANNERS OPCIONAIS */
 
