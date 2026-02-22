@@ -12,7 +12,7 @@ font-family:system-ui;
 background:#f5f1ec;
 }
 
-/* espaço para footer rodape fixo */
+/* espaço do footer desktop */
 body{
 padding-bottom:110px;
 }
@@ -84,12 +84,11 @@ padding:20px;
 margin-right:320px;
 }
 
-/* ================= CARD ESTILO IFOOD ================= */
+/* ================= CARD ================= */
 
 .card{
 position:relative;
 height:300px;
-
 border-radius:18px;
 overflow:hidden;
 
@@ -104,7 +103,6 @@ color:white;
 
 box-shadow:0 10px 25px rgba(0,0,0,.25);
 cursor:pointer;
-
 transition:.3s;
 }
 
@@ -112,7 +110,7 @@ transition:.3s;
 transform:translateY(-6px);
 }
 
-/* sombra sobre imagem */
+/* sombra */
 
 .card::after{
 content:"";
@@ -125,8 +123,6 @@ rgba(0,0,0,.35),
 transparent
 );
 }
-
-/* texto */
 
 .card h3,
 .card .preco,
@@ -141,12 +137,12 @@ font-size:22px;
 }
 
 .preco{
-color:#ffffff;
+color:#fff;
 font-size:20px;
 font-weight:bold;
 }
 
-/* botões */
+/* botoes */
 
 .qtd{
 padding:12px 14px 16px;
@@ -158,12 +154,11 @@ align-items:center;
 .card button{
 width:38px;
 height:38px;
-font-size:18px;
 border:none;
 border-radius:10px;
 background:#c62828;
 color:white;
-cursor:pointer;
+font-size:18px;
 }
 
 /* ================= PEDIDO ================= */
@@ -203,25 +198,19 @@ border:none;
 color:white;
 font-weight:bold;
 border-radius:10px;
-font-size:16px;
-cursor:pointer;
 }
 
-/* ================= ZOOM REAL FULLSCREEN ================= */
+/* ================= ZOOM ================= */
 
 #zoom{
 display:none;
 position:fixed;
 top:0;
 left:0;
-
 width:100vw;
 height:100vh;
-
 background:#000;
-
 z-index:99999;
-
 justify-content:center;
 align-items:center;
 }
@@ -230,21 +219,9 @@ align-items:center;
 width:95vw;
 height:95vh;
 object-fit:contain;
-animation:zoomIn .25s ease;
 }
 
-@keyframes zoomIn{
-from{
-transform:scale(.8);
-opacity:0;
-}
-to{
-transform:scale(1);
-opacity:1;
-}
-}
-
-/* ================= FOOTER FIXO ================= */
+/* ================= FOOTER ================= */
 
 .rodape{
 position:fixed;
@@ -255,8 +232,8 @@ width:100%;
 background:#111;
 color:white;
 
-padding:8px 10px;   /* ↓ altura */
-font-size:12px;     /* ↓ fonte */
+padding:8px 10px;
+font-size:12px;
 
 text-align:center;
 
@@ -265,7 +242,7 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 
-gap:2px;            /* ↓ espaço entre linhas */
+gap:2px;
 
 z-index:50;
 }
@@ -279,11 +256,12 @@ line-height:1.2;
 
 @media(max-width:900px){
 
+/* ✅ ALTURA REAL DO FOOTER MOBILE */
 body{
-padding-bottom:220px;
+padding-bottom:85px;
 }
 
-/* categorias deslizam */
+/* categorias deslizando */
 nav{
 flex-wrap:nowrap;
 overflow-x:auto;
@@ -295,12 +273,12 @@ nav button{
 flex-shrink:0;
 }
 
-/* produtos grandes */
+/* produtos */
 
 #produtos{
 grid-template-columns:1fr;
 margin-right:0;
-padding-bottom:420px;
+padding-bottom:120px;
 }
 
 .card{
@@ -313,6 +291,14 @@ height:340px;
 position:relative;
 width:100%;
 margin:12px;
+}
+
+/* ✅ FOOTER MENOR MOBILE */
+
+.rodape{
+padding:6px 8px;
+font-size:11px;
+gap:1px;
 }
 
 }
