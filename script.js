@@ -119,8 +119,24 @@ if(p.cat!==cat)return;
 produtosDiv.innerHTML+=`
 <div class="card">
 
-<img src="${p.img || 'img/padrao.jpg'}"
-onclick="zoomImg('${p.img || 'img/padrao.jpg'}')">
+produtosDiv.innerHTML+=`
+<div class="card"
+style="background-image:url('${p.img || "img/padrao.jpg"}')"
+onclick="zoomImg('${p.img || "img/padrao.jpg"}')">
+
+<h3>${p.nome}</h3>
+
+<p class="preco">
+R$ ${p.preco.toFixed(2)}
+</p>
+
+<div class="qtd">
+<button onclick="event.stopPropagation();alterar(${i},-1)">-</button>
+${carrinho[i]||0}
+<button onclick="event.stopPropagation();alterar(${i},1)">+</button>
+</div>
+
+</div>`;
 
 <h3>${p.nome}</h3>
 
