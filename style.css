@@ -173,8 +173,6 @@ border-radius:10px;
 font-size:16px;
 }
 
-/* ================= ZOOM REAL ================= */
-
 /* ================= ZOOM FULLSCREEN ================= */
 
 #zoom{
@@ -240,9 +238,6 @@ gap:6px;
 z-index:50;
 }
 
-body{
-padding-bottom:140px;
-}
 /* ================= MOBILE ================= */
 
 @media(max-width:900px){
@@ -259,10 +254,7 @@ min-width:auto;
 flex-shrink:0;
 }
   
-body{
-padding-bottom:180px;
-}
-  
+
 
 /* produtos grandes estilo ifood */
 
