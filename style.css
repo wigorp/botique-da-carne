@@ -1,7 +1,12 @@
-body{
+*{
+box-sizing:border-box;
+}
+
+html,body{
 margin:0;
+overflow-x:hidden;
 font-family:system-ui;
-background:#f4f6f8;
+background:#eceff1;
 }
 
 /* HEADER */
@@ -12,35 +17,20 @@ padding:10px;
 text-align:center;
 }
 
-.logo{
-width:150px;
-}
+.logo{width:150px}
 
-/* BANNERS */
+/* SLIDER */
 
-#banners img{
-width:100%;
-border-radius:10px;
-margin-top:8px;
-}
-
-/* INSTAGRAM */
-
-.instagram{
-width:100%;
-height:140px;
-border:none;
-margin-top:10px;
-}
-
-/* CATEGORIAS */
-
-nav{
+#banners{
 display:flex;
 gap:10px;
-overflow:auto;
+overflow-x:auto;
 padding:10px;
-background:white;
+}
+
+#banners img{
+height:160px;
+border-radius:12px;
 }
 
 /* PRODUTOS */
@@ -56,16 +46,17 @@ margin-right:320px;
 
 .card{
 background:white;
-border-radius:12px;
+border-radius:14px;
 padding:10px;
-box-shadow:0 2px 8px rgba(0,0,0,.1);
+box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
 
 .card img{
 width:100%;
-height:130px;
+height:180px;
 object-fit:cover;
-border-radius:10px;
+border-radius:12px;
+cursor:pointer;
 }
 
 .preco{
@@ -73,7 +64,7 @@ color:#e53935;
 font-weight:bold;
 }
 
-/* PEDIDO MODERNO */
+/* PEDIDO */
 
 .pedido{
 position:fixed;
@@ -101,18 +92,28 @@ padding:10px;
 background:#25D366;
 border:none;
 color:white;
-font-weight:bold;
 border-radius:8px;
 }
 
-/* RODAPE MENOR */
+/* ZOOM */
 
-.rodape{
-background:#111;
-color:white;
-padding:10px;
-font-size:14px;
-text-align:center;
+#zoom{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.9);
+z-index:9999;
+justify-content:center;
+align-items:center;
+}
+
+#zoom img{
+max-width:90%;
+max-height:90%;
+border-radius:12px;
 }
 
 /* MOBILE */
@@ -127,10 +128,6 @@ padding-bottom:420px;
 .pedido{
 position:relative;
 width:100%;
-bottom:auto;
-right:auto;
-border-radius:0;
-box-shadow:none;
 margin:10px;
 }
 
