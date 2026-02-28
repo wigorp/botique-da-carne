@@ -22,7 +22,7 @@ const produtos=[
 {nome:"Frango Bacon",preco:50,img:"img/logo.png"}
 ];
 
-/* ================= MOSTRAR PRODUTOS ================= */
+/* ================= MOSTRAR ================= */
 
 function mostrar(){
 
@@ -51,18 +51,35 @@ function alterar(i,v){
 
 carrinho[i]=(carrinho[i]||0)+v;
 
-if(carrinho[i]<=0)
-delete carrinho[i];
+if(carrinho[i]<=0) delete carrinho[i];
 
 render();
 mostrar();
 }
 
-/* ================= RENDER TOTAL ================= */
+/* ================= TOTAL ================= */
+
+function calcularTotais(){
+
+let totalProdutos=0;
+
+Object.keys(carrinho).forEach(i=>{
+totalProdutos+=produtos[i].preco*carrinho[i];
+});
+
+const frete=Number(bairro.value||0);
+
+return{
+produtos:totalProdutos,
+frete:frete,
+total:totalProdutos+frete
+};
+}
 
 function render(){
 
-let totalProdutos=0;
+const t=calcularTotais();
+
 let html="";
 
 Object.keys(carrinho).forEach(i=>{
@@ -71,22 +88,15 @@ const p=produtos[i];
 const qtd=carrinho[i];
 const sub=p.preco*qtd;
 
-totalProdutos+=sub;
-
-html+=`
-${p.nome} x${qtd}
-(R$ ${sub.toFixed(2)})<br>`;
+html+=`${p.nome} x${qtd} - R$${sub.toFixed(2)}<br>`;
 });
-
-const frete=Number(bairro.value||0);
-const totalFinal=totalProdutos+frete;
 
 itensDiv.innerHTML=html||"Nenhum item";
 
 totalDiv.innerHTML=`
-Produtos: R$ ${totalProdutos.toFixed(2)}<br>
-Frete: R$ ${frete.toFixed(2)}<br>
-<b>Total: R$ ${totalFinal.toFixed(2)}</b>
+Produtos: R$ ${t.produtos.toFixed(2)}<br>
+Frete: R$ ${t.frete.toFixed(2)}<br>
+<b>Total: R$ ${t.total.toFixed(2)}</b>
 `;
 }
 
@@ -96,57 +106,42 @@ bairro.addEventListener("change",render);
 
 function enviarPedido(){
 
-if(Object.keys(carrinho).length===0){
-alert("Adicione itens");
-return;
-}
+const t=calcularTotais();
 
 let msg="🛒 Pedido Botique da Carne\n\n";
-
-let totalProdutos=0;
 
 Object.keys(carrinho).forEach(i=>{
 
 const p=produtos[i];
 const qtd=carrinho[i];
-const sub=p.preco*qtd;
 
-msg+=`${p.nome} x${qtd} - R$${sub.toFixed(2)}\n`;
-totalProdutos+=sub;
+msg+=`${p.nome} x${qtd}\n`;
 });
 
-const frete=Number(bairro.value||0);
-const totalFinal=totalProdutos+frete;
+msg+=`
+🚚 Frete: R$${t.frete.toFixed(2)}
+💰 Total: R$${t.total.toFixed(2)}
 
-msg+=`\n🚚 Frete: R$${frete.toFixed(2)}`;
-msg+=`\n💰 Total: R$${totalFinal.toFixed(2)}\n\n`;
-
-msg+=`👤 ${nome.value}`;
-msg+=`\n📞 ${telefone.value}`;
-msg+=`\n📍 ${endereco.value}`;
-msg+=`\n💳 ${pagamento.value}`;
-
-if(obs.value){
-msg+=`\n📝 ${obs.value}`;
-}
+👤 ${nome.value}
+📞 ${telefone.value}
+📍 ${endereco.value}
+💳 ${pagamento.value}
+📝 ${obs.value||"-"}
+`;
 
 window.open(
 `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`
 );
 }
 
-/* ================= IMPRESSÃO SUNMI SAFE ================= */
+/* ================= IMPRESSÃO REAL SUNMI ================= */
 
 function imprimirPedido(){
 
-if(Object.keys(carrinho).length===0){
-alert("Adicione itens");
-return;
-}
+const t=calcularTotais();
 
-let totalProdutos=0;
-
-let html=`
+/* monta cupom */
+let cupom=`
 <html>
 <body style="
 width:58mm;
@@ -154,7 +149,7 @@ font-family:monospace;
 text-align:center;
 ">
 
-<img src="img/logo.png" width="110"><br>
+<img id="logo" src="img/logo.png" width="110"><br>
 <b>BOTIQUE DA CARNE</b>
 <hr>
 `;
@@ -165,28 +160,23 @@ const p=produtos[i];
 const qtd=carrinho[i];
 const sub=p.preco*qtd;
 
-totalProdutos+=sub;
-
-html+=`
+cupom+=`
 ${p.nome}<br>
-${qtd} x ${p.preco.toFixed(2)} = ${sub.toFixed(2)}<br><br>
+${qtd} x ${p.preco.toFixed(2)}
+= ${sub.toFixed(2)}<br><br>
 `;
 });
 
-const frete=Number(bairro.value||0);
-const totalFinal=totalProdutos+frete;
-
-html+=`
+cupom+=`
 <hr>
-Produtos: ${totalProdutos.toFixed(2)}<br>
-Frete: ${frete.toFixed(2)}<br>
-<b>TOTAL: ${totalFinal.toFixed(2)}</b>
+Frete: ${t.frete.toFixed(2)}<br>
+TOTAL: ${t.total.toFixed(2)}
 <hr>
 
 Cliente: ${nome.value}<br>
-Tel: ${telefone.value}<br>
-End: ${endereco.value}<br>
-Pag: ${pagamento.value}<br>
+Telefone: ${telefone.value}<br>
+Pagamento: ${pagamento.value}<br>
+Endereço: ${endereco.value}<br>
 Obs: ${obs.value||"-"}
 
 <br><br>
@@ -195,44 +185,49 @@ Obrigado!
 </html>
 `;
 
-/* ===== IMPRESSÃO VIA IFRAME (MAIS ESTÁVEL NA SUNMI) ===== */
+/* ===== iframe seguro ===== */
 
-const iframe=document.createElement("iframe");
+const frame=document.createElement("iframe");
 
-iframe.style.position="fixed";
-iframe.style.width="0";
-iframe.style.height="0";
-iframe.style.border="0";
+frame.style.position="fixed";
+frame.style.right="0";
+frame.style.bottom="0";
+frame.style.width="1px";
+frame.style.height="1px";
+frame.style.border="0";
 
-document.body.appendChild(iframe);
+document.body.appendChild(frame);
 
-const doc=iframe.contentWindow.document;
+const doc=frame.contentWindow.document;
 
 doc.open();
-doc.write(html);
+doc.write(cupom);
 doc.close();
 
-/* Delay maior evita crash WebView SUNMI */
-setTimeout(()=>{
-
-iframe.contentWindow.focus();
-iframe.contentWindow.print();
+/* espera carregar imagem */
+frame.onload=()=>{
 
 setTimeout(()=>{
-document.body.removeChild(iframe);
+
+frame.contentWindow.focus();
+frame.contentWindow.print();
+
+setTimeout(()=>{
+document.body.removeChild(frame);
 },4000);
 
-},1500);
+},1200);
+
+};
 }
 
-/* ================= TELEFONE 11 DIGITOS ================= */
+/* ================= TELEFONE ================= */
 
 telefone.addEventListener("input",()=>{
 telefone.value=
 telefone.value.replace(/\D/g,"").slice(0,11);
 });
 
-/* ================= INIT ================= */
-
+/* INIT */
 mostrar();
 render();
