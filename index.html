@@ -2,7 +2,6 @@
 <html lang="pt-br">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport"
 content="width=device-width,initial-scale=1">
@@ -10,17 +9,13 @@ content="width=device-width,initial-scale=1">
 <title>Botique da Carne</title>
 
 <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
 <header class="topo">
-
-<img src="img/logo.png" class="logo">
-
+<img src="img/logo.png" class="logo" alt="Botique da Carne">
 <div id="banners"></div>
-
 </header>
 
 <nav id="categorias"></nav>
@@ -32,7 +27,7 @@ content="width=device-width,initial-scale=1">
 <h3>🛒 Seu Pedido</h3>
 
 <div id="itens"></div>
-<div id="total">Total: R$0,00</div>
+<div id="total">Total: R$ 0,00</div>
 
 <select id="bairro">
 <option value="">Entrega</option>
@@ -48,15 +43,14 @@ content="width=device-width,initial-scale=1">
 <option>Cartão</option>
 </select>
 
-<input id="nome" placeholder="Nome">
+<input id="nome" placeholder="Nome completo">
 <input id="telefone" placeholder="Telefone">
-<input id="endereco" placeholder="Endereço">
+<input id="endereco" placeholder="Endereço completo">
 
 <textarea id="obs"
-placeholder="Observações"></textarea>
+placeholder="Observações (opcional)"></textarea>
 
 <button onclick="enviarPedido()">WhatsApp</button>
-
 <button onclick="imprimirPedido()">🖨️ Imprimir</button>
 
 </section>
@@ -65,9 +59,8 @@ placeholder="Observações"></textarea>
 Botique da Carne • Goiânia GO
 </footer>
 
-<div id="zoom" onclick="fecharZoom()">
-<img id="zoomImg">
-</div>
+<!-- ÁREA OCULTA DE IMPRESSÃO -->
+<div id="printArea" style="display:none"></div>
 
 <script src="script.js"></script>
 
