@@ -1,36 +1,84 @@
 body{
+margin:0;
 font-family:system-ui;
 background:#f5f1ec;
-margin:0;
+padding-bottom:100px;
+}
+
+/* HEADER */
+.topo{
+background:#dbd9d9;
+text-align:center;
+padding:15px;
+}
+
+.logo{
+width:160px;
+}
+
+/* PRODUTOS */
+#produtos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
+padding:20px;
+margin-right:320px;
 }
 
 .card{
-height:260px;
+position:relative;
+height:300px;
+border-radius:18px;
+overflow:hidden;
 background-size:cover;
-color:white;
+background-position:center;
 display:flex;
 flex-direction:column;
 justify-content:flex-end;
-padding:10px;
-margin:10px;
-border-radius:12px;
+color:white;
+padding:14px;
+box-shadow:0 10px 25px rgba(0,0,0,.3);
 }
 
 .preco{
-color:white;
 font-weight:bold;
 }
 
+/* PEDIDO */
 .pedido{
 position:fixed;
-right:10px;
-bottom:10px;
-background:#111;
+right:15px;
+bottom:15px;
+width:300px;
+background:#1b1b1b;
 color:white;
-padding:15px;
-width:280px;
+padding:18px;
+border-radius:18px;
 }
 
+.pedido input,
+.pedido select,
+.pedido textarea{
+width:100%;
+margin-top:8px;
+padding:8px;
+border-radius:6px;
+border:none;
+}
+
+.pedido button{
+margin-top:10px;
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:#25D366;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* FOOTER */
 .rodape{
 position:fixed;
 bottom:0;
@@ -39,4 +87,30 @@ background:#000;
 color:white;
 text-align:center;
 padding:6px;
+font-size:12px;
+}
+
+/* ===== IMPRESSÃO ===== */
+
+@media print{
+
+body *{
+visibility:hidden;
+}
+
+#printArea,
+#printArea *{
+visibility:visible;
+}
+
+#printArea{
+position:absolute;
+left:0;
+top:0;
+width:58mm;
+background:white;
+color:black;
+font-size:12px;
+}
+
 }
