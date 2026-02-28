@@ -1,5 +1,6 @@
 const numero="5562992819373";
 
+const produtosDiv=document.getElementById("produtos");
 const itensDiv=document.getElementById("itens");
 const totalDiv=document.getElementById("total");
 
@@ -11,9 +12,9 @@ const telefone=document.getElementById("telefone");
 const endereco=document.getElementById("endereco");
 const obs=document.getElementById("obs");
 
-const printArea=document.getElementById("printArea");
-
 let carrinho={};
+
+/* ================= PRODUTOS ================= */
 
 const produtos=[
 {nome:"Contra Filé",preco:60,img:"img/logo.png"},
@@ -21,16 +22,15 @@ const produtos=[
 {nome:"Frango Bacon",preco:50,img:"img/logo.png"}
 ];
 
-/* ================= PRODUTOS ================= */
+/* ================= MOSTRAR PRODUTOS ================= */
 
 function mostrar(){
 
-const div=document.getElementById("produtos");
-div.innerHTML="";
+produtosDiv.innerHTML="";
 
 produtos.forEach((p,i)=>{
 
-div.innerHTML+=`
+produtosDiv.innerHTML+=`
 <div class="card"
 style="background-image:url('${p.img}')">
 
@@ -58,7 +58,7 @@ render();
 mostrar();
 }
 
-/* ================= TOTAL ================= */
+/* ================= RENDER TOTAL ================= */
 
 function render(){
 
@@ -90,9 +90,16 @@ Frete: R$ ${frete.toFixed(2)}<br>
 `;
 }
 
-/* ================= WHATSAPP CORRETO ================= */
+bairro.addEventListener("change",render);
+
+/* ================= WHATSAPP ================= */
 
 function enviarPedido(){
+
+if(Object.keys(carrinho).length===0){
+alert("Adicione itens");
+return;
+}
 
 let msg="🛒 Pedido Botique da Carne\n\n";
 
@@ -119,26 +126,37 @@ msg+=`\n📞 ${telefone.value}`;
 msg+=`\n📍 ${endereco.value}`;
 msg+=`\n💳 ${pagamento.value}`;
 
-if(obs.value)
+if(obs.value){
 msg+=`\n📝 ${obs.value}`;
+}
 
 window.open(
 `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`
 );
 }
 
-/* ================= IMPRESSÃO SUNMI REAL ================= */
+/* ================= IMPRESSÃO SUNMI SAFE ================= */
 
 function imprimirPedido(){
+
+if(Object.keys(carrinho).length===0){
+alert("Adicione itens");
+return;
+}
 
 let totalProdutos=0;
 
 let html=`
-<center>
+<html>
+<body style="
+width:58mm;
+font-family:monospace;
+text-align:center;
+">
+
 <img src="img/logo.png" width="110"><br>
 <b>BOTIQUE DA CARNE</b>
 <hr>
-</center>
 `;
 
 Object.keys(carrinho).forEach(i=>{
@@ -162,7 +180,7 @@ html+=`
 <hr>
 Produtos: ${totalProdutos.toFixed(2)}<br>
 Frete: ${frete.toFixed(2)}<br>
-TOTAL: ${totalFinal.toFixed(2)}
+<b>TOTAL: ${totalFinal.toFixed(2)}</b>
 <hr>
 
 Cliente: ${nome.value}<br>
@@ -172,32 +190,49 @@ Pag: ${pagamento.value}<br>
 Obs: ${obs.value||"-"}
 
 <br><br>
-<center>Obrigado!</center>
+Obrigado!
+</body>
+</html>
 `;
 
-printArea.innerHTML=html;
+/* ===== IMPRESSÃO VIA IFRAME (MAIS ESTÁVEL NA SUNMI) ===== */
 
-/* 🔥 SEGREDO SUNMI */
-printArea.style.display="block";
+const iframe=document.createElement("iframe");
+
+iframe.style.position="fixed";
+iframe.style.width="0";
+iframe.style.height="0";
+iframe.style.border="0";
+
+document.body.appendChild(iframe);
+
+const doc=iframe.contentWindow.document;
+
+doc.open();
+doc.write(html);
+doc.close();
+
+/* Delay maior evita crash WebView SUNMI */
+setTimeout(()=>{
+
+iframe.contentWindow.focus();
+iframe.contentWindow.print();
 
 setTimeout(()=>{
-window.print();
+document.body.removeChild(iframe);
+},4000);
 
-setTimeout(()=>{
-printArea.style.display="none";
-},800);
-
-},600);
+},1500);
 }
 
-/* TELEFONE */
+/* ================= TELEFONE 11 DIGITOS ================= */
 
 telefone.addEventListener("input",()=>{
 telefone.value=
 telefone.value.replace(/\D/g,"").slice(0,11);
 });
 
-bairro.addEventListener("change",render);
+/* ================= INIT ================= */
 
 mostrar();
 render();
