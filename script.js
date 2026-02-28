@@ -4,7 +4,9 @@ const categoriasDiv=document.getElementById("categorias");
 const produtosDiv=document.getElementById("produtos");
 const itensDiv=document.getElementById("itens");
 const totalDiv=document.getElementById("total");
+
 const bairro=document.getElementById("bairro");
+const pagamento=document.getElementById("pagamento");
 
 const nome=document.getElementById("nome");
 const telefone=document.getElementById("telefone");
@@ -13,27 +15,34 @@ const endereco=document.getElementById("endereco");
 let carrinho={};
 let categoriaAtual="";
 
-/* PRODUTOS */
+/* ================= ICONES ================= */
+
+function icone(cat){
+if(cat.includes("Bovinos")) return "🐄";
+if(cat.includes("Frango")) return "🐔";
+if(cat.includes("Outros")) return "🐖";
+return "🥩";
+}
+
+/* ================= PRODUTOS ================= */
 
 const produtos=[
-{cat:"Bovinos",nome:"Contra Filé",preco:60,img:"img/logo.png"},
-{cat:"Bovinos",nome:"Picanha",preco:90,img:"img/logo.png"},
-{cat:"Frango",nome:"Frango Bacon",preco:50,img:"img/logo.png"}
+{cat:"Espetinhos > Bovinos",nome:"Contra Filé",preco:60,img:"img/contra file.jpeg"},
+{cat:"Espetinhos > Bovinos",nome:"Picanha",preco:95,img:"img/logo.png"}
 ];
 
-/* CATEGORIAS */
+/* ================= CATEGORIAS ================= */
 
 const categorias=[...new Set(produtos.map(p=>p.cat))];
 
 categorias.forEach(cat=>{
 categoriasDiv.innerHTML+=`
 <button onclick="mostrar('${cat}')">
-${cat}
-</button>
-`;
+${icone(cat)} ${cat}
+</button>`;
 });
 
-/* MOSTRAR */
+/* ================= MOSTRAR ================= */
 
 function mostrar(cat){
 
@@ -42,9 +51,10 @@ produtosDiv.innerHTML="";
 
 produtos.forEach((p,i)=>{
 
-if(p.cat!==cat)return;
+if(p.cat!==cat) return;
 
 produtosDiv.innerHTML+=`
+
 <div class="card"
 style="background-image:url('${p.img}')"
 onclick="zoomImg('${p.img}')">
@@ -65,112 +75,139 @@ R$ ${p.preco.toFixed(2)}
 
 </div>
 
-</div>
-`;
+</div>`;
 });
+
 }
 
-/* ALTERAR */
+/* ================= ALTERAR ================= */
 
 function alterar(i,v){
 
 carrinho[i]=(carrinho[i]||0)+v;
 
-if(carrinho[i]<0)
-carrinho[i]=0;
+if(carrinho[i]<=0)
+delete carrinho[i];
 
 render();
 mostrar(categoriaAtual);
 }
 
-/* TOTAL */
+/* ================= RENDER PEDIDO ================= */
 
 function render(){
 
-let total=0;
+let totalProdutos=0;
 let html="";
 
-for(let i in carrinho){
+Object.keys(carrinho).forEach(i=>{
 
-if(carrinho[i]>0){
+const qtd=carrinho[i];
+const p=produtos[i];
 
-let p=produtos[i];
-let sub=p.preco*carrinho[i];
+const subtotal=p.preco*qtd;
+
+totalProdutos+=subtotal;
 
 html+=`
-${p.nome} x${carrinho[i]} = R$${sub.toFixed(2)}<br>
-`;
-
-total+=sub;
-}
-}
+${p.nome} x${qtd}
+<br>
+R$ ${subtotal.toFixed(2)}
+<hr>`;
+});
 
 const frete=Number(bairro.value||0);
-total+=frete;
+const totalFinal=totalProdutos+frete;
 
-totalDiv.innerText=`Total: R$${total.toFixed(2)}`;
-itensDiv.innerHTML=html;
+/* MOSTRA ITENS */
+itensDiv.innerHTML=html || "Nenhum item";
+
+/* MOSTRA TOTAL CORRETO */
+totalDiv.innerHTML=`
+🧾 Produtos: R$ ${totalProdutos.toFixed(2)}<br>
+🚚 Frete: R$ ${frete.toFixed(2)}<br>
+<b>💰 Total: R$ ${totalFinal.toFixed(2)}</b>
+`;
 }
 
 bairro.addEventListener("change",render);
 
-/* WHATSAPP */
+/* ================= WHATSAPP ================= */
 
 function enviarPedido(){
 
-let msg="Pedido Botique da Carne\n\n";
-let total=0;
-
-for(let i in carrinho){
-
-if(carrinho[i]>0){
-
-let p=produtos[i];
-
-msg+=`${p.nome} x${carrinho[i]}\n`;
-
-total+=p.preco*carrinho[i];
-}
+if(Object.keys(carrinho).length===0){
+alert("Adicione itens");
+return;
 }
 
-msg+=`\nCliente: ${nome.value}`;
-msg+=`\nTel: ${telefone.value}`;
-msg+=`\nEnd: ${endereco.value}`;
+let msg="🛒 Pedido Botique da Carne\n\n";
 
-window.open(
-`https://wa.me/${numero}?text=${encodeURIComponent(msg)}`
-);
+let totalProdutos=0;
+
+Object.keys(carrinho).forEach(i=>{
+
+const qtd=carrinho[i];
+const p=produtos[i];
+
+const sub=p.preco*qtd;
+
+msg+=`${p.nome} x${qtd} - R$${sub.toFixed(2)}\n`;
+
+totalProdutos+=sub;
+});
+
+const frete=Number(bairro.value||0);
+const totalFinal=totalProdutos+frete;
+
+msg+=`\n🚚 Frete: R$${frete.toFixed(2)}`;
+msg+=`\n💰 Total: R$${totalFinal.toFixed(2)}\n\n`;
+
+msg+=`👤 ${nome.value}`;
+msg+=`\n📞 ${telefone.value}`;
+msg+=`\n📍 ${endereco.value}`;
+msg+=`\n💳 ${pagamento.value}`;
+
+const url=
+"https://wa.me/"+numero+
+"?text="+encodeURIComponent(msg);
+
+window.open(url,"_blank");
 }
 
-/* ===== IMPRESSÃO SUNMI ===== */
+/* ================= IMPRIMIR ================= */
 
 function imprimirPedido(){
 
-let pedido={
+localStorage.setItem("pedidoPrint",JSON.stringify({
+carrinho,
 nome:nome.value,
 telefone:telefone.value,
 endereco:endereco.value,
-itens:carrinho
-};
-
-localStorage.setItem(
-"pedidoPrint",
-JSON.stringify(pedido)
-);
+pagamento:pagamento.value,
+frete:bairro.value
+}));
 
 window.open("print.html","_blank");
 }
 
-/* ZOOM */
+/* ================= ZOOM ================= */
 
 function zoomImg(src){
-zoom.style.display="flex";
-zoomImg.src=src;
+document.getElementById("zoomImg").src=src;
+document.getElementById("zoom").style.display="flex";
 }
 
 function fecharZoom(){
-zoom.style.display="none";
+document.getElementById("zoom").style.display="none";
 }
+
+/* ================= INPUT ================= */
+
+telefone.addEventListener("input",()=>{
+telefone.value=
+telefone.value.replace(/\D/g,"").slice(0,11);
+});
 
 /* INIT */
 
