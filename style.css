@@ -44,7 +44,8 @@ box-shadow:0 10px 25px rgba(0,0,0,.3);
 font-weight:bold;
 }
 
-/* PEDIDO */
+/* ================= PEDIDO ================= */
+
 .pedido{
 position:fixed;
 right:15px;
@@ -54,29 +55,26 @@ background:#1b1b1b;
 color:white;
 padding:18px;
 border-radius:18px;
+box-shadow:0 10px 35px rgba(0,0,0,.3);
+z-index:100;
 }
 
-.pedido input,
-.pedido select,
-.pedido textarea{
-width:100%;
-margin-top:8px;
-padding:8px;
-border-radius:6px;
-border:none;
+/* MOBILE / SUNMI */
+
+@media(max-width:1024px){
+
+#produtos{
+margin-right:0;
 }
 
-.pedido button{
-margin-top:10px;
-width:100%;
-padding:12px;
-border:none;
-border-radius:8px;
-background:#25D366;
-color:white;
-font-weight:bold;
-cursor:pointer;
+.pedido{
+position:relative;
+width:95%;
+margin:20px auto;
+right:auto;
+bottom:auto;
 }
+
 
 /* FOOTER */
 .rodape{
