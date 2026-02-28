@@ -1,318 +1,42 @@
-/* ================= RESET ================= */
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
-
-html,body{
-overflow-x:hidden;
+body{
 font-family:system-ui;
 background:#f5f1ec;
+margin:0;
 }
-
-/* espaço do footer desktop */
-body{
-padding-bottom:110px;
-}
-
-/* ================= HEADER ================= */
-
-.topo{
-background:#dbd9d9;
-padding:14px;
-text-align:center;
-}
-
-.logo{
-width:170px;
-}
-
-/* ================= BANNERS ================= */
-
-#banners{
-display:flex;
-gap:15px;
-overflow-x:auto;
-padding:12px;
-scroll-snap-type:x mandatory;
-}
-
-#banners img{
-height:170px;
-border-radius:14px;
-flex-shrink:0;
-scroll-snap-align:start;
-}
-
-/* ================= CATEGORIAS ================= */
-
-nav{
-display:flex;
-flex-wrap:wrap;
-gap:14px;
-padding:14px;
-justify-content:center;
-background:#fff;
-}
-
-nav button{
-background:#fff;
-border:2px solid #eee;
-padding:12px 20px;
-border-radius:30px;
-font-size:15px;
-font-weight:600;
-cursor:pointer;
-transition:.25s;
-}
-
-nav button:hover{
-background:#ffcc00;
-transform:scale(1.05);
-}
-
-/* ================= PRODUTOS ================= */
-
-#produtos{
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(260px,1fr));
-gap:22px;
-padding:20px;
-margin-right:320px;
-}
-
-/* ================= CARD ================= */
 
 .card{
-position:relative;
-height:300px;
-border-radius:18px;
-overflow:hidden;
-
+height:260px;
 background-size:cover;
-background-position:center;
-
+color:white;
 display:flex;
 flex-direction:column;
 justify-content:flex-end;
-
-color:white;
-
-box-shadow:0 10px 25px rgba(0,0,0,.25);
-cursor:pointer;
-transition:.3s;
-}
-
-.card:hover{
-transform:translateY(-6px);
-}
-
-/* sombra */
-
-.card::after{
-content:"";
-position:absolute;
-inset:0;
-background:linear-gradient(
-to top,
-rgba(0,0,0,.85),
-rgba(0,0,0,.35),
-transparent
-);
-}
-
-.card h3,
-.card .preco,
-.card .qtd{
-position:relative;
-z-index:2;
-padding-left:14px;
-}
-
-.card h3{
-font-size:22px;
+padding:10px;
+margin:10px;
+border-radius:12px;
 }
 
 .preco{
-color:#fff;
-font-size:20px;
+color:white;
 font-weight:bold;
 }
-
-/* botoes */
-
-.qtd{
-padding:12px 14px 16px;
-display:flex;
-gap:10px;
-align-items:center;
-}
-
-.card button{
-width:38px;
-height:38px;
-border:none;
-border-radius:10px;
-background:#c62828;
-color:white;
-font-size:18px;
-}
-
-/* ================= PEDIDO ================= */
 
 .pedido{
 position:fixed;
-right:15px;
-bottom:15px;
-width:300px;
-
-background:#1b1b1b;
+right:10px;
+bottom:10px;
+background:#111;
 color:white;
-
-padding:18px;
-border-radius:18px;
-
-box-shadow:0 10px 35px rgba(0,0,0,.45);
-z-index:100;
+padding:15px;
+width:280px;
 }
-
-.pedido input,
-.pedido select,
-.pedido textarea{
-width:100%;
-margin-top:8px;
-padding:10px;
-border-radius:8px;
-border:none;
-}
-
-.pedido button{
-margin-top:12px;
-width:100%;
-padding:14px;
-background:#25D366;
-border:none;
-color:white;
-font-weight:bold;
-border-radius:10px;
-}
-
-/* ================= ZOOM ================= */
-
-#zoom{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100vw;
-height:100vh;
-background:#000;
-z-index:99999;
-justify-content:center;
-align-items:center;
-}
-
-#zoom img{
-width:95vw;
-height:95vh;
-object-fit:contain;
-}
-
-/* ================= FOOTER ================= */
 
 .rodape{
 position:fixed;
 bottom:0;
-left:0;
 width:100%;
-
-background:#111;
+background:#000;
 color:white;
-
-padding:8px 10px;
-font-size:12px;
-
 text-align:center;
-
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-
-gap:2px;
-
-z-index:50;
-}
-
-.rodape p{
-margin:2px 0;
-line-height:1.2;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:900px){
-
-/* ✅ ALTURA REAL DO FOOTER MOBILE */
-body{
-padding-bottom:85px;
-}
-
-/* categorias deslizando */
-nav{
-flex-wrap:nowrap;
-overflow-x:auto;
-justify-content:flex-start;
-padding-left:10px;
-}
-
-nav button{
-flex-shrink:0;
-}
-
-/* produtos */
-
-#produtos{
-grid-template-columns:1fr;
-margin-right:0;
-padding-bottom:120px;
-}
-
-.card{
-height:340px;
-}
-
-/* pedido vira bloco */
-
-.pedido{
-position:relative;
-width:100%;
-margin:12px;
-}
-
-/* ✅ FOOTER MENOR MOBILE */
-
-.rodape{
-padding:6px 8px;
-font-size:11px;
-gap:1px;
-}
-
-/* imprimir */  
-.btn-print{
-margin-top:8px;
-width:100%;
-padding:14px;
-background:#ff9800;
-border:none;
-color:white;
-font-weight:bold;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
-}
-  
+padding:6px;
 }
