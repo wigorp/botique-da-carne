@@ -3,8 +3,7 @@
 
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Botique da Carne</title>
 
@@ -14,11 +13,14 @@ content="width=device-width,initial-scale=1">
 <body>
 
 <header class="topo">
-<img src="img/logo.png" class="logo" alt="Botique da Carne">
+<img src="img/logo.png" class="logo">
 <div id="banners"></div>
 </header>
 
 <nav id="categorias"></nav>
+
+<!-- LAYOUT FLEX (IMPORTANTE) -->
+<div class="container">
 
 <main id="produtos"></main>
 
@@ -26,8 +28,8 @@ content="width=device-width,initial-scale=1">
 
 <h3>🛒 Seu Pedido</h3>
 
-<div id="itens"></div>
-<div id="total">Total: R$ 0,00</div>
+<div id="itens">Nenhum item</div>
+<div id="total">Total: R$0,00</div>
 
 <select id="bairro">
 <option value="">Entrega</option>
@@ -43,24 +45,26 @@ content="width=device-width,initial-scale=1">
 <option>Cartão</option>
 </select>
 
-<input id="nome" placeholder="Nome completo">
+<input id="nome" placeholder="Nome">
 <input id="telefone" placeholder="Telefone">
-<input id="endereco" placeholder="Endereço completo">
+<input id="endereco" placeholder="Endereço">
 
 <textarea id="obs"
-placeholder="Observações (opcional)"></textarea>
+placeholder="Observações"></textarea>
 
 <button onclick="enviarPedido()">WhatsApp</button>
-<button onclick="imprimirPedido()">🖨️ Imprimir</button>
+<button onclick="imprimirPedido()">🖨 Imprimir</button>
 
 </section>
+
+</div>
 
 <footer class="rodape">
 Botique da Carne • Goiânia GO
 </footer>
 
-<!-- ÁREA OCULTA DE IMPRESSÃO -->
-<div id="printArea" style="display:none"></div>
+<!-- AREA IMPRESSÃO -->
+<div id="printArea"></div>
 
 <script src="script.js"></script>
 
