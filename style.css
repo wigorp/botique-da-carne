@@ -47,19 +47,31 @@ font-weight:bold;
 /* ================= PEDIDO ================= */
 
 .pedido{
-position:fixed;
-right:15px;
-bottom:15px;
 width:300px;
 background:#1b1b1b;
 color:white;
 padding:18px;
 border-radius:18px;
 box-shadow:0 10px 35px rgba(0,0,0,.3);
-z-index:100;
 }
 
-/* MOBILE / SUNMI */
+/* ===== DESKTOP ===== */
+
+@media(min-width:1025px){
+
+.pedido{
+position:fixed;
+right:15px;
+top:120px;
+}
+
+#produtos{
+margin-right:340px;
+}
+
+}
+
+/* ===== CELULAR + SUNMI ===== */
 
 @media(max-width:1024px){
 
@@ -68,12 +80,14 @@ margin-right:0;
 }
 
 .pedido{
-position:relative;
+position:relative !important;
 width:95%;
 margin:20px auto;
+top:auto;
 right:auto;
 bottom:auto;
 }
+
 }
 
 /* FOOTER */
