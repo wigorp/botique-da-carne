@@ -140,19 +140,8 @@ function imprimirPedido(){
 
 const t=calcularTotais();
 
-/* monta cupom */
-let cupom=`
-<html>
-<body style="
-width:58mm;
-font-family:monospace;
-text-align:center;
-">
-
-<img id="logo" src="img/logo.png" width="110"><br>
-<b>BOTIQUE DA CARNE</b>
-<hr>
-`;
+let texto="BOTIQUE DA CARNE\n";
+texto+="-----------------------------\n";
 
 Object.keys(carrinho).forEach(i=>{
 
@@ -160,30 +149,34 @@ const p=produtos[i];
 const qtd=carrinho[i];
 const sub=p.preco*qtd;
 
-cupom+=`
-${p.nome}<br>
-${qtd} x ${p.preco.toFixed(2)}
-= ${sub.toFixed(2)}<br><br>
-`;
+texto+=`${p.nome}\n`;
+texto+=`${qtd} x ${p.preco.toFixed(2)} = ${sub.toFixed(2)}\n\n`;
+
 });
 
-cupom+=`
-<hr>
-Frete: ${t.frete.toFixed(2)}<br>
-TOTAL: ${t.total.toFixed(2)}
-<hr>
+texto+="-----------------------------\n";
 
-Cliente: ${nome.value}<br>
-Telefone: ${telefone.value}<br>
-Pagamento: ${pagamento.value}<br>
-Endereço: ${endereco.value}<br>
-Obs: ${obs.value||"-"}
+texto+=`Frete: ${t.frete.toFixed(2)}\n`;
+texto+=`TOTAL: ${t.total.toFixed(2)}\n`;
 
-<br><br>
-Obrigado!
-</body>
-</html>
-`;
+texto+="-----------------------------\n";
+
+texto+=`Cliente: ${nome.value}\n`;
+texto+=`Tel: ${telefone.value}\n`;
+texto+=`Pag: ${pagamento.value}\n`;
+texto+=`End: ${endereco.value}\n`;
+texto+=`Obs: ${obs.value||"-"}\n\n`;
+
+texto+="Obrigado!\n\n\n";
+
+/* ===== IMPRESSÃO SUNMI ===== */
+
+const blob=new Blob([texto],{type:"text/plain"});
+
+const url=URL.createObjectURL(blob);
+
+window.open(url,"_blank");
+}
 
 /* ===== iframe seguro ===== */
 
