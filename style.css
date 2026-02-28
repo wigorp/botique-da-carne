@@ -2,10 +2,11 @@ body{
 margin:0;
 font-family:system-ui;
 background:#f5f1ec;
-padding-bottom:100px;
+padding-bottom:70px;
 }
 
 /* HEADER */
+
 .topo{
 background:#dbd9d9;
 text-align:center;
@@ -16,35 +17,43 @@ padding:15px;
 width:160px;
 }
 
-/* PRODUTOS */
-#produtos{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+/* LAYOUT */
+
+.container{
+display:flex;
 gap:20px;
 padding:20px;
-margin-right:320px;
+align-items:flex-start;
+}
+
+/* PRODUTOS */
+
+#produtos{
+flex:1;
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
 }
 
 .card{
-position:relative;
-height:300px;
+height:280px;
 border-radius:18px;
-overflow:hidden;
 background-size:cover;
 background-position:center;
 display:flex;
 flex-direction:column;
 justify-content:flex-end;
-color:white;
 padding:14px;
-box-shadow:0 10px 25px rgba(0,0,0,.3);
+color:white;
+box-shadow:0 8px 20px rgba(0,0,0,.3);
 }
 
 .preco{
 font-weight:bold;
 }
 
-/* ================= PEDIDO ================= */
+/* PEDIDO */
 
 .pedido{
 width:300px;
@@ -52,45 +61,34 @@ background:#1b1b1b;
 color:white;
 padding:18px;
 border-radius:18px;
-box-shadow:0 10px 35px rgba(0,0,0,.3);
 }
 
-/* ===== DESKTOP ===== */
-
-@media(min-width:1025px){
-
-.pedido{
-position:fixed;
-right:15px;
-top:120px;
+.pedido input,
+.pedido select,
+.pedido textarea{
+width:100%;
+margin-top:8px;
+padding:10px;
+border-radius:8px;
+border:none;
 }
 
-#produtos{
-margin-right:340px;
-}
-
-}
-
-/* ===== CELULAR + SUNMI ===== */
+/* MOBILE + SUNMI */
 
 @media(max-width:1024px){
 
-#produtos{
-margin-right:0;
+.container{
+flex-direction:column;
 }
 
 .pedido{
-position:relative !important;
-width:95%;
-margin:20px auto;
-top:auto;
-right:auto;
-bottom:auto;
+width:100%;
 }
 
 }
 
 /* FOOTER */
+
 .rodape{
 position:fixed;
 bottom:0;
@@ -102,27 +100,26 @@ padding:6px;
 font-size:12px;
 }
 
-/* ===== IMPRESSÃO ===== */
+/* IMPRESSÃO LEVE */
+
+#printArea{
+display:none;
+}
 
 @media print{
 
-body *{
-visibility:hidden;
-}
-
-#printArea,
-#printArea *{
-visibility:visible;
+.topo,
+nav,
+.container,
+.rodape{
+display:none !important;
 }
 
 #printArea{
-position:absolute;
-left:0;
-top:0;
+display:block;
 width:58mm;
-background:white;
-color:black;
 font-size:12px;
+color:black;
 }
 
 }
