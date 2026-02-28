@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<style>
+
+body{
+width:58mm;
+font-family:monospace;
+text-align:center;
+}
+
+.logo{
+width:120px;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+}
+
+hr{
+border-top:1px dashed black;
+}
+
+</style>
+
+</head>
+
+<body onload="imprimir()">
+
+<img src="img/logo.png" class="logo">
+
+<h3>BOTIQUE DA CARNE</h3>
+
+<hr>
+
+<div id="itens"></div>
+
+<hr>
+
+<div id="total"></div>
+
+<div id="cliente"></div>
+
+<script>
+
+const pedido=
+JSON.parse(localStorage.getItem("pedidoPrint"));
+
+let total=0;
+let html="";
+
+pedido.itens.forEach(p=>{
+
+html+=`
+<div class="item">
+<span>${p.nome} x${p.qtd}</span>
+<span>${(p.preco*p.qtd).toFixed(2)}</span>
+</div>
+`;
+
+total+=p.preco*p.qtd;
+
+});
+
+total+=pedido.frete;
+
+document.getElementById("itens").innerHTML=html;
+
+document.getElementById("total")
+.innerHTML="<b>TOTAL R$ "+total.toFixed(2)+"</b>";
+
+document.getElementById("cliente")
+.innerHTML=
+pedido.nome+"<br>"+
+pedido.telefone+"<br>"+
+pedido.endereco;
+
+function imprimir(){
+
+setTimeout(()=>{
+window.print();
+window.close();
+},600);
+
+}
+
+</script>
+
+</body>
+</html>
