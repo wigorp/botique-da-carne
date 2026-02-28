@@ -1,6 +1,5 @@
 const numero="5562992819373";
 
-const produtosDiv=document.getElementById("produtos");
 const itensDiv=document.getElementById("itens");
 const totalDiv=document.getElementById("total");
 
@@ -10,6 +9,9 @@ const pagamento=document.getElementById("pagamento");
 const nome=document.getElementById("nome");
 const telefone=document.getElementById("telefone");
 const endereco=document.getElementById("endereco");
+const obs=document.getElementById("obs");
+
+const printArea=document.getElementById("printArea");
 
 let carrinho={};
 
@@ -19,13 +21,16 @@ const produtos=[
 {nome:"Frango Bacon",preco:50,img:"img/logo.png"}
 ];
 
+/* ================= PRODUTOS ================= */
+
 function mostrar(){
 
-produtosDiv.innerHTML="";
+const div=document.getElementById("produtos");
+div.innerHTML="";
 
 produtos.forEach((p,i)=>{
 
-produtosDiv.innerHTML+=`
+div.innerHTML+=`
 <div class="card"
 style="background-image:url('${p.img}')">
 
@@ -40,6 +45,8 @@ ${carrinho[i]||0}
 });
 }
 
+/* ================= ALTERAR ================= */
+
 function alterar(i,v){
 
 carrinho[i]=(carrinho[i]||0)+v;
@@ -51,6 +58,8 @@ render();
 mostrar();
 }
 
+/* ================= TOTAL ================= */
+
 function render(){
 
 let totalProdutos=0;
@@ -58,76 +67,137 @@ let html="";
 
 Object.keys(carrinho).forEach(i=>{
 
-let p=produtos[i];
-let qtd=carrinho[i];
-let sub=p.preco*qtd;
+const p=produtos[i];
+const qtd=carrinho[i];
+const sub=p.preco*qtd;
 
 totalProdutos+=sub;
 
-html+=`${p.nome} x${qtd}<br>`;
+html+=`
+${p.nome} x${qtd}
+(R$ ${sub.toFixed(2)})<br>`;
 });
 
-let frete=Number(bairro.value||0);
-let total=totalProdutos+frete;
+const frete=Number(bairro.value||0);
+const totalFinal=totalProdutos+frete;
 
 itensDiv.innerHTML=html||"Nenhum item";
 
-totalDiv.innerHTML=
-`Produtos: R$${totalProdutos.toFixed(2)}<br>
-Frete: R$${frete.toFixed(2)}<br>
-<b>Total: R$${total.toFixed(2)}</b>`;
+totalDiv.innerHTML=`
+Produtos: R$ ${totalProdutos.toFixed(2)}<br>
+Frete: R$ ${frete.toFixed(2)}<br>
+<b>Total: R$ ${totalFinal.toFixed(2)}</b>
+`;
 }
 
-bairro.addEventListener("change",render);
-
-/* WHATSAPP */
+/* ================= WHATSAPP CORRETO ================= */
 
 function enviarPedido(){
 
-let msg="Pedido Botique da Carne\n\n";
+let msg="🛒 Pedido Botique da Carne\n\n";
+
+let totalProdutos=0;
 
 Object.keys(carrinho).forEach(i=>{
-msg+=`${produtos[i].nome} x${carrinho[i]}\n`;
+
+const p=produtos[i];
+const qtd=carrinho[i];
+const sub=p.preco*qtd;
+
+msg+=`${p.nome} x${qtd} - R$${sub.toFixed(2)}\n`;
+totalProdutos+=sub;
 });
+
+const frete=Number(bairro.value||0);
+const totalFinal=totalProdutos+frete;
+
+msg+=`\n🚚 Frete: R$${frete.toFixed(2)}`;
+msg+=`\n💰 Total: R$${totalFinal.toFixed(2)}\n\n`;
+
+msg+=`👤 ${nome.value}`;
+msg+=`\n📞 ${telefone.value}`;
+msg+=`\n📍 ${endereco.value}`;
+msg+=`\n💳 ${pagamento.value}`;
+
+if(obs.value)
+msg+=`\n📝 ${obs.value}`;
 
 window.open(
 `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`
 );
 }
 
-/* IMPRESSÃO SUNMI SAFE */
+/* ================= IMPRESSÃO SUNMI REAL ================= */
 
 function imprimirPedido(){
 
-let html=`<center>
-<img src="img/logo.png" width="100"><hr>`;
+let totalProdutos=0;
+
+let html=`
+<center>
+<img src="img/logo.png" width="110"><br>
+<b>BOTIQUE DA CARNE</b>
+<hr>
+</center>
+`;
 
 Object.keys(carrinho).forEach(i=>{
-html+=`${produtos[i].nome} x${carrinho[i]}<br>`;
+
+const p=produtos[i];
+const qtd=carrinho[i];
+const sub=p.preco*qtd;
+
+totalProdutos+=sub;
+
+html+=`
+${p.nome}<br>
+${qtd} x ${p.preco.toFixed(2)} = ${sub.toFixed(2)}<br><br>
+`;
 });
 
-html+=`<hr>
-Cliente:${nome.value}<br>
-Tel:${telefone.value}<br>
-End:${endereco.value}
-</center>`;
+const frete=Number(bairro.value||0);
+const totalFinal=totalProdutos+frete;
 
-const area=document.getElementById("printArea");
+html+=`
+<hr>
+Produtos: ${totalProdutos.toFixed(2)}<br>
+Frete: ${frete.toFixed(2)}<br>
+TOTAL: ${totalFinal.toFixed(2)}
+<hr>
 
-area.innerHTML=html;
+Cliente: ${nome.value}<br>
+Tel: ${telefone.value}<br>
+End: ${endereco.value}<br>
+Pag: ${pagamento.value}<br>
+Obs: ${obs.value||"-"}
+
+<br><br>
+<center>Obrigado!</center>
+`;
+
+printArea.innerHTML=html;
+
+/* 🔥 SEGREDO SUNMI */
+printArea.style.display="block";
 
 setTimeout(()=>{
 window.print();
-},200);
 
+setTimeout(()=>{
+printArea.style.display="none";
+},800);
+
+},600);
 }
 
-/* TELEFONE 11 DIGITOS */
+/* TELEFONE */
 
 telefone.addEventListener("input",()=>{
 telefone.value=
 telefone.value.replace(/\D/g,"").slice(0,11);
 });
+
+bairro.addEventListener("change",render);
 
 mostrar();
 render();
