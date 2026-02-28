@@ -301,4 +301,18 @@ font-size:11px;
 gap:1px;
 }
 
+/* imprimir */  
+.btn-print{
+margin-top:8px;
+width:100%;
+padding:14px;
+background:#ff9800;
+border:none;
+color:white;
+font-weight:bold;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+  
 }
