@@ -12,13 +12,8 @@ font-family:monospace;
 text-align:center;
 }
 
-.logo{
-width:120px;
-}
-
-.item{
-display:flex;
-justify-content:space-between;
+img{
+width:150px;
 }
 
 hr{
@@ -29,64 +24,43 @@ border-top:1px dashed black;
 
 </head>
 
-<body onload="imprimir()">
+<body>
 
-<img src="img/logo.png" class="logo">
+<img src="img/logo.png">
 
 <h3>BOTIQUE DA CARNE</h3>
 
-<hr>
-
-<div id="itens"></div>
-
-<hr>
-
-<div id="total"></div>
-
-<div id="cliente"></div>
+<div id="cupom"></div>
 
 <script>
 
 const pedido=
 JSON.parse(localStorage.getItem("pedidoPrint"));
 
-let total=0;
-let html="";
+let html="<hr>";
 
-pedido.itens.forEach(p=>{
+for(let i in pedido.itens){
+
+if(pedido.itens[i]>0){
 
 html+=`
-<div class="item">
-<span>${p.nome} x${p.qtd}</span>
-<span>${(p.preco*p.qtd).toFixed(2)}</span>
-</div>
+Item ${i} x${pedido.itens[i]}<br>
+`;
+}
+}
+
+html+=`
+<hr>
+Cliente: ${pedido.nome}<br>
+Tel: ${pedido.telefone}<br>
+End: ${pedido.endereco}<br>
 `;
 
-total+=p.preco*p.qtd;
-
-});
-
-total+=pedido.frete;
-
-document.getElementById("itens").innerHTML=html;
-
-document.getElementById("total")
-.innerHTML="<b>TOTAL R$ "+total.toFixed(2)+"</b>";
-
-document.getElementById("cliente")
-.innerHTML=
-pedido.nome+"<br>"+
-pedido.telefone+"<br>"+
-pedido.endereco;
-
-function imprimir(){
+document.getElementById("cupom").innerHTML=html;
 
 setTimeout(()=>{
 window.print();
-window.close();
-},600);
-
-}
+},500);
 
 </script>
 
